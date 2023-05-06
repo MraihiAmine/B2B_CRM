@@ -1,0 +1,50 @@
+package B2B.CRM.dashboard.services.statistics;
+
+import B2B.CRM.dashboard.entities.statistics.CustomerRetentionRateEntity;
+import B2B.CRM.dashboard.entities.statistics.NpsEntity;
+import B2B.CRM.dashboard.entities.statistics.SalesGrowthRateEntity;
+import B2B.CRM.dashboard.entities.statistics.SalesStatisticsEntity;
+import B2B.CRM.dashboard.repositories.statisitics.CustomerRetentionRateRepository;
+import B2B.CRM.dashboard.repositories.statisitics.NpsRepository;
+import B2B.CRM.dashboard.repositories.statisitics.SalesGrowthRateRepository;
+import B2B.CRM.dashboard.repositories.statisitics.SalesStatisticsRepository;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+
+@Service
+public class SalesSatisticsService {
+
+  @Autowired
+  private SalesStatisticsRepository salesStatisticsRepository;
+
+  @Autowired
+  private CustomerRetentionRateRepository customerRetentionRateRepository;
+
+  @Autowired
+  private NpsRepository npsRepository;
+
+  @Autowired
+  private SalesGrowthRateRepository salesGrowthRateRepository;
+
+  public ModelAndView createSalesStatistics() {
+    SalesStatisticsEntity salesStatistics = new SalesStatisticsEntity();
+
+    List<CustomerRetentionRateEntity> customerRetentionRateList = customerRetentionRateRepository.findAll();
+    List<NpsEntity> npsEntities = npsRepository.findAll();
+    List<SalesGrowthRateEntity> salesGrowthRateEntities = salesGrowthRateRepository.findAll();
+
+    salesStatisticsRepository.save(salesStatistics);
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.addObject("salesStatistics", salesStatistics);
+    modelAndView.addObject("npsEntities", npsEntities);
+    modelAndView.addObject("salesGrowthRateEntities", salesGrowthRateEntities);
+    modelAndView.addObject(
+      "customerRetentionRateList",
+      customerRetentionRateList
+    );
+    modelAndView.setViewName("statistics/dashboard");
+    return modelAndView;
+  }
+}

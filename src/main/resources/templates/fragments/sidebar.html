@@ -1,0 +1,77 @@
+<!--**********************************
+      Sidebar start
+  ***********************************-->
+<div th:fragment="sidebar">
+  <div class="nk-sidebar">
+    <div class="nk-nav-scroll">
+      <ul class="metismenu" id="menu">
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-settings menu-icon"></i
+            ><span class="nav-text">Manage users</span>
+          </a>
+          <ul aria-expanded="false">
+            <li>
+              <a th:href="@{/accounts/list}">
+                <i class="icon-people menu-icon"></i
+                ><span class="nav-text">Users</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/accounts/add}">
+                <i class="icon-plus menu-icon"></i
+                ><span class="nav-text">Add user</span></a
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-home menu-icon"></i
+            ><span class="nav-text">Providers</span>
+          </a>
+          <ul aria-expanded="false">
+            <li>
+              <a th:href="@{/provider/list}">
+                <i class="icon-list menu-icon"></i
+                ><span class="nav-text">list of providers</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/provider/add}">
+                <i class="icon-plus menu-icon"></i
+                ><span class="nav-text">add provider</span></a
+              >
+            </li>
+            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-earphones menu-icon"></i
+            ><span class="nav-text">Articles</span>
+          </a>
+          <ul aria-expanded="false">
+            <li>
+              <a th:href="@{/article/list}">
+                <i class="icon-list menu-icon"></i
+                ><span class="nav-text">list of articles</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/article/add}">
+                <i class="icon-plus menu-icon"></i
+                ><span class="nav-text">add article</span></a
+              >
+            </li>
+            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!--**********************************
+      Sidebar end
+  ***********************************-->

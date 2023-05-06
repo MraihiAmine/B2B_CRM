@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com
+    </title>
+    <!-- Favicon icon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="@{/front/images/favicon.png}"
+    />
+    <!-- Pignose Calender -->
+    <link
+      th:href="@{/front/plugins/pg-calendar/css/pignose.calendar.min.css}"
+      rel="stylesheet"
+    />
+    <!-- Chartist -->
+    <link
+      rel="stylesheet"
+      href="@{/front/plugins/chartist/css/chartist.min.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/front/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css}"
+    />
+    <!-- Custom Stylesheet -->
+    <link th:href="@{/front/css/style.css}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+      <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+          <circle
+            class="path"
+            cx="50"
+            cy="50"
+            r="20"
+            fill="none"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+        </svg>
+      </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+      <!--**********************************
+            Content body start
+        ***********************************-->
+      <div class="content-body">
+        <div class="row page-titles mx-0">
+          <div class="col p-md-0">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">Dashboard</a>
+              </li>
+              <li class="breadcrumb-item active">
+                <a href="javascript:void(0)">Home</a>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <!-- row -->
+
+        <div class="container-fluid" th:if="${!successRegister}">
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-validation">
+                    <form
+                      class="form-valide"
+                      autocomplete="off"
+                      action="#"
+                      th:action="@{/registration}"
+                      th:object="${user}"
+                      method="post"
+                      role="form"
+                    >
+                      <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="email"
+                          >Name <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-lg-6">
+                          <input
+                            type="text"
+                            th:field="*{name}"
+                            placeholder="Name"
+                            class="form-control"
+                          />
+                          <span
+                            th:if="${#fields.hasErrors('name')}"
+                            th:errors="*{name}"
+                            class="text-danger"
+                          ></span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="email"
+                          >Last Name <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-lg-6">
+                          <input
+                            type="text"
+                            th:field="*{lastName}"
+                            placeholder="Last Name"
+                            class="form-control"
+                          />
+                          <span
+                            th:if="${#fields.hasErrors('lastName')}"
+                            th:errors="*{lastName}"
+                            class="text-danger"
+                          ></span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="email"
+                          >Email <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-lg-6">
+                          <input
+                            type="text"
+                            th:field="*{email}"
+                            placeholder="Email"
+                            class="form-control"
+                          />
+                          <span
+                            th:if="${#fields.hasErrors('email')}"
+                            th:errors="*{email}"
+                            class="text-danger"
+                          ></span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" for="password"
+                          >Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-lg-6">
+                          <input
+                            type="password"
+                            th:field="*{password}"
+                            placeholder="Password"
+                            class="form-control"
+                          />
+                          <span
+                            th:if="${#fields.hasErrors('password')}"
+                            th:errors="*{password}"
+                            class="text-danger"
+                          ></span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-lg-8 ml-auto">
+                          <button type="submit" class="btn btn-primary">
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-lg-8 ml-auto">
+                        <p class="mt-5 login-form__footer">
+                          Already have an account? Go to
+                          <a th:href="@{/login}" class="text-primary">login</a>
+                          page now
+                        </p>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div th:if="${successRegister}" class="login-form-bg h-100">
+          <div class="container h-100">
+            <div class="row justify-content-center h-100">
+              <div class="col-xl-6">
+                <div class="error-content">
+                  <div class="card mb-0">
+                    <div class="card-body text-center">
+                      <h1 class="error-text text-primary">400</h1>
+                      <h4 class="mt-4">
+                        <i class="fa fa-thumbs-down text-danger"></i>
+                        Bad Request
+                      </h4>
+                      <p>Your Request resulted in an error.</p>
+                      <form class="mt-5 mb-5">
+                        <div class="text-center mb-4 mt-4">
+                          <a href="index.html" class="btn btn-primary"
+                            >Go to Homepage</a
+                          >
+                        </div>
+                      </form>
+                      <div class="text-center">
+                        <p>
+                          Copyright © Designed by
+                          <a href="https://themeforest.net/user/digitalheaps"
+                            >Digitalheaps</a
+                          >, Developed by
+                          <a href="https://themeforest.net/user/quixlab"
+                            >E-Commerce</a
+                          >
+                          2018
+                        </p>
+                        <ul class="list-inline">
+                          <li class="list-inline-item">
+                            <a href="javascript:void()" class="btn btn-facebook"
+                              ><i class="fa fa-facebook"></i
+                            ></a>
+                          </li>
+                          <li class="list-inline-item">
+                            <a href="javascript:void()" class="btn btn-twitter"
+                              ><i class="fa fa-twitter"></i
+                            ></a>
+                          </li>
+                          <li class="list-inline-item">
+                            <a href="javascript:void()" class="btn btn-linkedin"
+                              ><i class="fa fa-linkedin"></i
+                            ></a>
+                          </li>
+                          <li class="list-inline-item">
+                            <a
+                              href="javascript:void()"
+                              class="btn btn-google-plus"
+                              ><i class="fa fa-google-plus"></i
+                            ></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- #/ container -->
+      </div>
+      <!--**********************************
+            Content body end
+        ***********************************-->
+
+      <!--**********************************
+            Footer start
+        ***********************************-->
+      <div class="footer">
+        <div class="copyright">
+          <p>
+            Copyright &copy; Designed & Developed by
+            <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+          </p>
+        </div>
+      </div>
+      <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script th:src="@{/front/plugins/common/common.min.js}"></script>
+    <script th:src="@{/front/js/custom.min.js}"></script>
+    <script th:src="@{/front/js/settings.js}"></script>
+    <script th:src="@{/front/js/gleek.js}"></script>
+    <script th:src="@{/front/js/styleSwitcher.js}"></script>
+    <script
+      th:src="@{/front/plugins/validation/jquery.validate.min.js}"
+    ></script>
+    <script
+      th:src="@{/front/plugins/validation/jquery.validate-init.js}"
+    ></script>
+
+    <!-- Chartjs -->
+    <script th:src="@{/front/plugins/chart.js/Chart.bundle.min.js}"></script>
+    <!-- Circle progress -->
+    <script
+      th:src="@{/front/plugins/circle-progress/circle-progress.min.js}"
+    ></script>
+    <!-- Datamap -->
+    <script th:src="@{/front/plugins/d3v3/index.js}"></script>
+    <script th:src="@{/front/plugins/topojson/topojson.min.js}"></script>
+    <script th:src="@{/front/plugins/datamaps/datamaps.world.min.js}"></script>
+    <!-- Morrisjs -->
+    <script th:src="@{/front/plugins/raphael/raphael.min.js}"></script>
+    <script th:src="@{/front/plugins/morris/morris.min.js}"></script>
+    <!-- Pignose Calender -->
+    <script th:src="@{/front/plugins/moment/moment.min.js}"></script>
+    <script
+      th:src="@{/front/plugins/pg-calendar/js/pignose.calendar.min.js}"
+    ></script>
+    <!-- ChartistJS -->
+    <script th:src="@{/front/plugins/chartist/js/chartist.min.js}"></script>
+    <script
+      th:src="@{/front/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js}"
+    ></script>
+
+    <script th:src="@{/front/js/dashboard/dashboard-1.js}"></script>
+  </body>
+</html>
