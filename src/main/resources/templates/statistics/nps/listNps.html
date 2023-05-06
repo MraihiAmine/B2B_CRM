@@ -1,76 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <div th:replace="fragments/head :: head"></div>
-
   <body>
-    <!--*******************
-        Preloader start
-    ********************-->
-    <div id="preloader">
-      <div class="loader">
-        <svg class="circular" viewBox="25 25 50 50">
-          <circle
-            class="path"
-            cx="50"
-            cy="50"
-            r="20"
-            fill="none"
-            stroke-width="3"
-            stroke-miterlimit="10"
-          />
-        </svg>
-      </div>
-    </div>
-    <!--*******************
-        Preloader end
-    ********************-->
+    <div th:replace="fragments/preloader :: preloader"></div>
 
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
     <div id="main-wrapper">
-      <!--**********************************
-            Nav header start
-        ***********************************-->
-      <div class="nav-header">
-        <div class="brand-logo">
-          <a href="index.html">
-            <b class="logo-abbr"
-              ><img th:src="@{/front/images/logo.png}" alt="" />
-            </b>
-            <span class="logo-compact"
-              ><img th:src="@{/front/images/logo-compact.png}" alt=""
-            /></span>
-            <span class="brand-title">
-              <img th:src="@{/front/images/logo-text.png}" alt="" />
-            </span>
-          </a>
-        </div>
-      </div>
-      <!--**********************************
-            Nav header end
-        ***********************************-->
+      <div th:replace="fragments/nav-header :: nav-header"></div>
 
-      <!--**********************************
-            Header start
-        ***********************************-->
       <div th:replace="fragments/header :: header"></div>
 
-      <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-
-      <!--**********************************
-            Sidebar start
-        ***********************************-->
       <div th:replace="fragments/sidebar :: sidebar"></div>
-      <!--**********************************
-            Sidebar end
-        ***********************************-->
 
-      <!--**********************************
-            Content body start
-        ***********************************-->
       <div class="content-body">
         <div class="container-fluid mt-3">
           <div class="row">
@@ -159,13 +99,7 @@
         </div>
         <!-- #/ container -->
       </div>
-      <!--**********************************
-            Content body end
-        ***********************************-->
 
-      <!--**********************************
-            Footer start
-        ***********************************-->
       <div class="footer">
         <div class="copyright">
           <p>
@@ -174,47 +108,8 @@
           </p>
         </div>
       </div>
-      <!--**********************************
-            Footer end
-        ***********************************-->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <script th:src="@{/front/plugins/common/common.min.js}"></script>
-    <script th:src="@{/front/js/custom.min.js}"></script>
-    <script th:src="@{/front/js/settings.js}"></script>
-    <script th:src="@{/front/js/gleek.js}"></script>
-    <script th:src="@{/front/js/styleSwitcher.js}"></script>
-
-    <!-- Chartjs -->
-    <script th:src="@{/front/plugins/chart.js/Chart.bundle.min.js}"></script>
-    <!-- Circle progress -->
-    <script
-      th:src="@{/front/plugins/circle-progress/circle-progress.min.js}"
-    ></script>
-    <!-- Datamap -->
-    <script th:src="@{/front/plugins/d3v3/index.js}"></script>
-    <script th:src="@{/front/plugins/topojson/topojson.min.js}"></script>
-    <script th:src="@{/front/plugins/datamaps/datamaps.world.min.js}"></script>
-    <!-- Morrisjs -->
-    <script th:src="@{/front/plugins/raphael/raphael.min.js}"></script>
-    <script th:src="@{/front/plugins/morris/morris.min.js}"></script>
-    <!-- Pignose Calender -->
-    <script th:src="@{/front/plugins/moment/moment.min.js}"></script>
-    <script
-      th:src="@{/front/plugins/pg-calendar/js/pignose.calendar.min.js}"
-    ></script>
-    <!-- ChartistJS -->
-    <script th:src="@{/front/plugins/chartist/js/chartist.min.js}"></script>
-    <script
-      th:src="@{/front/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js}"
-    ></script>
-
-    <script th:src="@{/front/js/dashboard/dashboard-1.js}"></script>
+    <div th:replace="fragments/scriptsListNps :: scriptsListNps"></div>
   </body>
 </html>
