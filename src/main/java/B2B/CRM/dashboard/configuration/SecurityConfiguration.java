@@ -67,6 +67,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .permitAll() // accès pour tous users
       .antMatchers("/registration")
       .permitAll() // accès pour tous users
+      .antMatchers("/article/**")
+      .permitAll() // accès pour tous users
+      .antMatchers("/year_statistics/**")
+      .permitAll() // accès pour tous users
+      .antMatchers("/product/**")
+      .permitAll() // accès pour tous users
       .antMatchers("/user/add")
       .permitAll()
       .antMatchers("/accounts/profile")

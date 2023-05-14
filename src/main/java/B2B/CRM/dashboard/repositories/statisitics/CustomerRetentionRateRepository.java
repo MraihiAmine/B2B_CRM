@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository("CustomerRetentionRateRepository")
 public interface CustomerRetentionRateRepository extends JpaRepository<CustomerRetentionRateEntity, Long> {
-    Optional<CustomerRetentionRateEntity> getCustomerRetentionRateByProductAndDate(String product, LocalDate date);
 }

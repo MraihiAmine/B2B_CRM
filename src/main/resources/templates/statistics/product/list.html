@@ -6,21 +6,7 @@
     <!--*******************
         Preloader start
     ********************-->
-    <div id="preloader">
-      <div class="loader">
-        <svg class="circular" viewBox="25 25 50 50">
-          <circle
-            class="path"
-            cx="50"
-            cy="50"
-            r="20"
-            fill="none"
-            stroke-width="3"
-            stroke-miterlimit="10"
-          />
-        </svg>
-      </div>
-    </div>
+    <div th:replace="fragments/preloader :: preloader"></div>
     <!--*******************
         Preloader end
     ********************-->
@@ -32,21 +18,7 @@
       <!--**********************************
             Nav header start
         ***********************************-->
-      <div class="nav-header">
-        <div class="brand-logo">
-          <a href="index.html">
-            <b class="logo-abbr"
-              ><img th:src="@{/front/images/logo.png}" alt="" />
-            </b>
-            <span class="logo-compact"
-              ><img th:src="@{/front/images/logo-compact.png}" alt=""
-            /></span>
-            <span class="brand-title">
-              <img th:src="@{/front/images/logo-text.png}" alt="" />
-            </span>
-          </a>
-        </div>
-      </div>
+        <div th:replace="fragments/nav-header :: nav-header"></div>
       <!--**********************************
             Nav header end
         ***********************************-->
@@ -77,7 +49,7 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-body">
-                  <div th:switch="${crrList}" class="active-member">
+                  <div th:switch="${productList}" class="active-member">
                     <div class="table-responsive">
                       <div th:case="null" class="login-form-bg h-100">
                         <div class="login-form-bg h-100">
@@ -91,7 +63,7 @@
                                         <i
                                           class="fa fa-warning text-danger"
                                         ></i>
-                                        No crr data yet
+                                        No products data yet
                                       </h4>
                                     </div>
                                   </div>
@@ -105,33 +77,29 @@
                         <table class="table table-xs mb-0">
                           <thead>
                             <tr>
-                              <th>product</th>
-                              <th>Date</th>
-                              <th>totalCustomers</th>
-                              <th>returningCustomers</th>
-                              <th>retentionRate</th>
+                              <th>name</th>
+                              <th>description</th>
+                              <th>price</th>
                               <th>Update</th>
                               <th>Delete</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr th:each="crr : ${crrList}">
-                              <td th:text="${crr.product}"></td>
-                              <td th:text="${crr.Date}"></td>
-                              <td th:text="${crr.totalCustomers}"></td>
-                              <td th:text="${crr.returningCustomers}"></td>
-                              <td th:text="${crr.retentionRate}"></td>
+                            <tr th:each="product: ${productList}">
+                              <td th:text="${product.name}"></td>
+                              <td th:text="${product.description}"></td>
+                              <td th:text="${product.price}"></td>
                               <td>
                                 <a
-                                  th:href="@{/crr/edit/{id}(id=${crr.id})}"
+                                  th:href="@{/product/edit/{id}(id=${product.id})}"
                                   class="btn btn-warning"
                                   ><i class="fa fa-edit ml-2"></i
                                 ></a>
                               </td>
                               <td>
                                 <a
-                                  onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet crr?');"
-                                  th:href="@{/crr/delete/{id}(id=${crr.id})}"
+                                  onclick="return confirm('Confirm deletion please!');"
+                                  th:href="@{/product/delete/{id}(id=${product.id})}"
                                   class="btn btn-danger"
                                 >
                                   <i class="fa fa-trash ml-2"></i
@@ -143,14 +111,14 @@
                       </div>
                       <div class="d-flex justify-content-end mt-3">
                         <a
-                          th:href="@{/crr/add}"
+                          th:href="@{/product/add}"
                           class="btn btn-primary ml-auto"
                         >
-                          Add CRR
+                          Add product
                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </a>
                         <a
-                          th:href="@{/statistics/dashboard}"
+                          th:href="@{/sales-statistics/dashboard}"
                           class="btn btn-secondary ml-2"
                         >
                           Go to Dashboard <i class="fa fa-list ml-2"></i>
