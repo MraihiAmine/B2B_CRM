@@ -1,90 +1,121 @@
 package B2B.CRM.dashboard.controllers.statistics;
 
 import B2B.CRM.dashboard.entities.statistics.CustomerRetentionRateEntity;
+import B2B.CRM.dashboard.entities.statistics.Product;
+import B2B.CRM.dashboard.entities.statistics.YearStatistic;
 import B2B.CRM.dashboard.repositories.statisitics.CustomerRetentionRateRepository;
+import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesStatisticsRepository;
-import B2B.CRM.dashboard.services.statistics.CustomerRetentionRateService;
+import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
-@RequestMapping("/crr")
+@Controller
+@RequestMapping("/crr/")
 public class CustomerRetentionRateController {
 
-  @Autowired
-  private CustomerRetentionRateRepository customerRetentionRateRepository;
+  private final CustomerRetentionRateRepository customerRetentionRateRepository;
+
+  private final ProductRepository productRepository;
+
+  private final YearStatisticRepository yearStatisticRepository;
 
   @Autowired
-  private SalesStatisticsRepository salesStatisticsRepository;
-
-  @Autowired
-  private CustomerRetentionRateService customerRetentionRateService;
-
-  @GetMapping("add")
-  public ModelAndView showAddArticleForm() {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.addObject("crr", new CustomerRetentionRateEntity());
-    modelAndView.setViewName("statistics/crr/addCRR");
-    return modelAndView;
-  }
-
-  @PostMapping("add")
-  public ModelAndView addArticle(
-    @Valid CustomerRetentionRateEntity customerRetentionRateEntity,
-    BindingResult result
+  CustomerRetentionRateController(
+    CustomerRetentionRateRepository customerRetentionRateRepository,
+    ProductRepository productRepository, YearStatisticRepository yearStatisticRepository
   ) {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.addObject("crr", customerRetentionRateEntity);
-    if (result.hasErrors()) {
-      modelAndView.setViewName("statistics/crr/addCRR");
-      System.out.println("result: " + result);
-      return modelAndView;
-    }
-    customerRetentionRateEntity.setRetentionRate(
-      customerRetentionRateEntity.calculateRetentionRate()
-    );
-    customerRetentionRateRepository.save(customerRetentionRateEntity);
-    modelAndView.setViewName("statistics/dashboard");
-    return modelAndView;
+    this.customerRetentionRateRepository = customerRetentionRateRepository;
+    this.productRepository = productRepository;
+    this.yearStatisticRepository = yearStatisticRepository;
   }
 
   @GetMapping("list")
-  public ModelAndView listProviders() {
+  public String listProviders(Model model) {
     List<CustomerRetentionRateEntity> la = customerRetentionRateRepository.findAll();
-    ModelAndView modelAndView = new ModelAndView();
-    if (la.isEmpty()) la = null;
-    modelAndView.addObject("crrList", la);
-    modelAndView.setViewName("statistics/crr/listCRR");
-    return modelAndView;
+    if (la.size() == 0) la = null;
+    model.addAttribute("crrList", la);
+    return "statistics/crr/listCRR";
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<CustomerRetentionRateEntity> update(
-    @PathVariable Long id,
-    @RequestBody CustomerRetentionRateEntity entity
+  @GetMapping("add")
+  public String showAddArticleForm(Model model) {
+    List<Product> lp = productRepository.findAll();
+    if(lp.isEmpty()) lp = null;
+    List<YearStatistic> ly = yearStatisticRepository.findAll();
+    if(ly.isEmpty()) ly = null;
+
+    model.addAttribute("listProducts", lp);
+    model.addAttribute("listYears", ly);
+    model.addAttribute("crr", new CustomerRetentionRateEntity());
+    return "statistics/crr/addCRR";
+  }
+
+  @PostMapping("add")
+  //@ResponseBody
+  public String addArticle(
+    Model model,
+    @Valid CustomerRetentionRateEntity customerRetentionRateEntity,
+    BindingResult result
   ) {
-    if (!customerRetentionRateRepository.existsById(id)) {
-      return ResponseEntity.notFound().build();
+    if (result.hasErrors()) {
+      model.addAttribute("crr", customerRetentionRateEntity);
+      return "statistics/crr/addCRR";
     }
-    entity.setId(id);
-    CustomerRetentionRateEntity savedEntity = customerRetentionRateRepository.save(
-      entity
-    );
-    return ResponseEntity.ok(savedEntity);
+    customerRetentionRateEntity.calculateRetentionRateQuarters();
+    customerRetentionRateRepository.save(customerRetentionRateEntity);
+    return "redirect:list";
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
-    if (!customerRetentionRateRepository.existsById(id)) {
-      return ResponseEntity.notFound().build();
+  @GetMapping("delete/{id}")
+  public String deleteProvider(@PathVariable("id") long id, Model model) {
+    CustomerRetentionRateEntity customerRetentionRateEntity = customerRetentionRateRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new IllegalArgumentException("Invalid provider Id:" + id)
+      );
+    customerRetentionRateRepository.delete(customerRetentionRateEntity);
+    return "redirect:/crr/list";
+  }
+
+  @GetMapping("edit/{id}")
+  public String showArticleFormToUpdate(
+    @PathVariable("id") long id,
+    Model model
+  ) {
+    CustomerRetentionRateEntity customerRetentionRateEntity = customerRetentionRateRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new IllegalArgumentException("Invalid provider Id:" + id)
+      );
+
+    model.addAttribute("crr", customerRetentionRateEntity);
+    return "statistics/crr/updateCRR";
+  }
+
+  @PostMapping("edit")
+  public String updateArticle(
+    @Valid CustomerRetentionRateEntity customerRetentionRateEntity,
+    BindingResult result,
+    Model model
+  ) {
+    if (result.hasErrors()) {
+      model.addAttribute("crr", customerRetentionRateEntity);
+      return "statistics/crr/updateCRR";
     }
-    customerRetentionRateRepository.deleteById(id);
-    return ResponseEntity.noContent().build();
+    customerRetentionRateRepository.save(customerRetentionRateEntity);
+    return "redirect:listCRR";
   }
 }

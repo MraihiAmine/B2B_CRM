@@ -58,6 +58,7 @@
                       enctype="multipart/form-data"
                     >
                       <div class="form-group row">
+                        <input type="hidden" th:field="*{id}" />
                         <label class="col-lg-4 col-form-label" for="label"
                           >product <span class="text-danger">*</span>
                         </label>
@@ -86,12 +87,13 @@
                           <input
                             name="date"
                             placeholder="Enter a date.."
-                            type="month"
+                            type="date"
                             th:field="*{date}"
                             class="form-control"
                             required
                             id="date"
                           />
+                          <input type="hidden" name="dateString" th:value="${#dates.format(date, 'yyyy-MM-dd')}" />
                         </div>
                         <span
                           th:if="${#fields.hasErrors('date')}"
