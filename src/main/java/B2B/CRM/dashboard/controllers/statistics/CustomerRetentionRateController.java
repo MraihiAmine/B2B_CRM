@@ -7,7 +7,6 @@ import B2B.CRM.dashboard.repositories.statisitics.CustomerRetentionRateRepositor
 import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesStatisticsRepository;
 import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -35,7 +34,8 @@ public class CustomerRetentionRateController {
   @Autowired
   CustomerRetentionRateController(
     CustomerRetentionRateRepository customerRetentionRateRepository,
-    ProductRepository productRepository, YearStatisticRepository yearStatisticRepository
+    ProductRepository productRepository,
+    YearStatisticRepository yearStatisticRepository
   ) {
     this.customerRetentionRateRepository = customerRetentionRateRepository;
     this.productRepository = productRepository;
@@ -53,9 +53,9 @@ public class CustomerRetentionRateController {
   @GetMapping("add")
   public String showAddArticleForm(Model model) {
     List<Product> lp = productRepository.findAll();
-    if(lp.isEmpty()) lp = null;
+    if (lp.isEmpty()) lp = null;
     List<YearStatistic> ly = yearStatisticRepository.findAll();
-    if(ly.isEmpty()) ly = null;
+    if (ly.isEmpty()) ly = null;
 
     model.addAttribute("listProducts", lp);
     model.addAttribute("listYears", ly);
@@ -68,12 +68,33 @@ public class CustomerRetentionRateController {
   public String addArticle(
     Model model,
     @Valid CustomerRetentionRateEntity customerRetentionRateEntity,
+    @RequestParam(name = "yearId", required = true) Long y,
+    @RequestParam(name = "productId", required = true) Long p,
     BindingResult result
   ) {
     if (result.hasErrors()) {
       model.addAttribute("crr", customerRetentionRateEntity);
       return "statistics/crr/addCRR";
     }
+
+    Product product = productRepository
+      .findById(p)
+      .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
+      );
+    
+
+    customerRetentionRateEntity.setProduct(product);
+
+    YearStatistic year = yearStatisticRepository
+      .findById(y)
+      .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y)
+      );
+
+      System.out.println("year");
+      System.out.println(year);
+
+    customerRetentionRateEntity.setYearStatistic(year);
+
     customerRetentionRateEntity.calculateRetentionRateQuarters();
     customerRetentionRateRepository.save(customerRetentionRateEntity);
     return "redirect:list";

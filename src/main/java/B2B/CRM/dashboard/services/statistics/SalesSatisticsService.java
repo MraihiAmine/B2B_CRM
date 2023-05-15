@@ -2,10 +2,12 @@ package B2B.CRM.dashboard.services.statistics;
 
 import B2B.CRM.dashboard.entities.statistics.CustomerRetentionRateEntity;
 import B2B.CRM.dashboard.entities.statistics.NpsEntity;
+import B2B.CRM.dashboard.entities.statistics.Product;
 import B2B.CRM.dashboard.entities.statistics.SalesGrowthRateEntity;
 import B2B.CRM.dashboard.entities.statistics.SalesStatisticsEntity;
 import B2B.CRM.dashboard.repositories.statisitics.CustomerRetentionRateRepository;
 import B2B.CRM.dashboard.repositories.statisitics.NpsRepository;
+import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesGrowthRateRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesStatisticsRepository;
 import java.util.List;
@@ -28,22 +30,17 @@ public class SalesSatisticsService {
   @Autowired
   private SalesGrowthRateRepository salesGrowthRateRepository;
 
+  @Autowired
+  private ProductRepository productRepository;
+
   public ModelAndView createSalesStatistics() {
     SalesStatisticsEntity salesStatistics = new SalesStatisticsEntity();
 
-    List<CustomerRetentionRateEntity> customerRetentionRateList = customerRetentionRateRepository.findAll();
-    List<NpsEntity> npsEntities = npsRepository.findAll();
-    List<SalesGrowthRateEntity> salesGrowthRateEntities = salesGrowthRateRepository.findAll();
+    List<Product> products = productRepository.findAll();
 
     salesStatisticsRepository.save(salesStatistics);
     ModelAndView modelAndView = new ModelAndView();
-    modelAndView.addObject("salesStatistics", salesStatistics);
-    modelAndView.addObject("npsEntities", npsEntities);
-    modelAndView.addObject("salesGrowthRateEntities", salesGrowthRateEntities);
-    modelAndView.addObject(
-      "customerRetentionRateList",
-      customerRetentionRateList
-    );
+    modelAndView.addObject("products", products);
     modelAndView.setViewName("statistics/dashboard");
     return modelAndView;
   }
