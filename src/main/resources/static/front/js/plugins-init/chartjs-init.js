@@ -20,69 +20,55 @@
       );
       switch (j) {
         case 0:
-            RRarray.push(products[0].customerRetentionRateEntities[i].retentionRateQ1);
-            break;
+          RRarray.push(
+            products[0].customerRetentionRateEntities[i].retentionRateQ1
+          );
+          break;
         case 1:
-            RRarray.push(products[0].customerRetentionRateEntities[i].retentionRateQ2);
-            break;
+          RRarray.push(
+            products[0].customerRetentionRateEntities[i].retentionRateQ2
+          );
+          break;
         case 2:
-            RRarray.push(products[0].customerRetentionRateEntities[i].retentionRateQ3);
-            break;
+          RRarray.push(
+            products[0].customerRetentionRateEntities[i].retentionRateQ3
+          );
+          break;
         case 3:
-            RRarray.push(products[0].customerRetentionRateEntities[i].retentionRateQ4);
-            break;
-      
+          RRarray.push(
+            products[0].customerRetentionRateEntities[i].retentionRateQ4
+          );
+          break;
+
         default:
-            break;
+          break;
       }
     }
   }
 
   console.log("quartersYears:", quartersYears);
   console.log("RRarray:", RRarray);
-  
+
   //Sales chart
   var ctx = document.getElementById("sales-chart");
   ctx.height = 150;
   var myChart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: ["2010", "2011", "2012", "2013", "2014", "2015", "2016"],
+      labels: quartersYears,
       type: "line",
       defaultFontFamily: "Montserrat",
       datasets: [
         {
-          label: "Clothes",
-          data: [0, 10, 20, 10, 25, 15, 150],
-          backgroundColor: "#173e43",
+          label: products[0].name,
+          data: RRarray,
+          backgroundColor: "",
           borderColor: "#7571F9",
           borderWidth: 3,
           pointStyle: "circle",
           pointRadius: 5,
           pointBorderColor: "transparent",
           pointBackgroundColor: "#7571F9",
-        },
-        {
-          label: "Foods",
-          data: [0, 30, 10, 60, 50, 63, 10],
-          backgroundColor: "transparent",
-          borderColor: "#4d7cff",
-          borderWidth: 3,
-          pointStyle: "circle",
-          pointRadius: 5,
-          pointBorderColor: "transparent",
-          pointBackgroundColor: "#4d7cff",
-        },
-        {
-          label: "Electronics",
-          data: [0, 50, 40, 20, 40, 79, 20],
-          backgroundColor: "transparent",
-          borderColor: "#173e43",
-          borderWidth: 3,
-          pointStyle: "circle",
-          pointRadius: 5,
-          pointBorderColor: "transparent",
-          pointBackgroundColor: "#173e43",
         },
       ],
     },
