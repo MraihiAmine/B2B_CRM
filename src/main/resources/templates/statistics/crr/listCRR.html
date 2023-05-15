@@ -102,88 +102,164 @@
                         </div>
                       </div>
                       <div th:case="*">
+                        <p style="font-size: medium">Quarter 1</p>
                         <table class="table table-xs mb-0">
                           <thead>
                             <tr>
-                              <th>product</th>
-                              <th>Date</th>
-                              <th>totalCustomers</th>
-                              <th>returningCustomers</th>
-                              <th>retentionRate</th>
-                              <th>Update</th>
-                              <th>Delete</th>
+                              <th>Product</th>
+                              <th>Year</th>
+                              <th>Tot. Customers Q1</th>
+                              <th>Ret. Cust. Q1</th>
+                              <th>Retention Rate Q1</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr th:each="crr : ${crrList}">
-                              <td th:text="${crr.product}"></td>
-                              <td th:text="${crr.Date}"></td>
-                              <td th:text="${crr.totalCustomers}"></td>
-                              <td th:text="${crr.returningCustomers}"></td>
-                              <td th:text="${crr.retentionRate}"></td>
-                              <td>
-                                <a
-                                  th:href="@{/crr/edit/{id}(id=${crr.id})}"
-                                  class="btn btn-warning"
-                                  ><i class="fa fa-edit ml-2"></i
-                                ></a>
-                              </td>
-                              <td>
-                                <a
-                                  onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet crr?');"
-                                  th:href="@{/crr/delete/{id}(id=${crr.id})}"
-                                  class="btn btn-danger"
-                                >
-                                  <i class="fa fa-trash ml-2"></i
-                                ></a>
-                              </td>
+                              <td th:text="${crr.product.name} "></td>
+                              <td th:text="${crr.yearStatistic.year} "></td>
+                              <td th:text="${crr.totalCustomersQ1} "></td>
+                              <td th:text="${crr.returningCustomersQ1}"></td>
+                              <td th:text="${crr.retentionRateQ1}"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <br />
+                        <p style="font-size: medium">Quarter 2</p>
+                        <table class="table table-xs mb-0">
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th>Year</th>
+                              <th>Tot. Customers Q2</th>
+                              <th>Ret. Cust. Q2</th>
+                              <th>Retention Rate Q2</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="crr : ${crrList}">
+                              <td th:text="${crr.product.name} "></td>
+                              <td th:text="${crr.yearStatistic.year} "></td>
+                              <td th:text="${crr.totalCustomersQ2} "></td>
+                              <td th:text="${crr.returningCustomersQ2}"></td>
+                              <td th:text="${crr.retentionRateQ2}"></td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
-                      <div class="d-flex justify-content-end mt-3">
-                        <a
-                          th:href="@{/crr/add}"
-                          class="btn btn-primary ml-auto"
-                        >
-                          Add CRR
-                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        </a>
-                        <a
-                          th:href="@{/statistics/dashboard}"
-                          class="btn btn-secondary ml-2"
-                        >
-                          Go to Dashboard <i class="fa fa-list ml-2"></i>
-                        </a>
-                      </div>
+                      <br />
+                      <p style="font-size: medium">Quarter 3</p>
+                      <table class="table table-xs mb-0">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Year</th>
+                            <th>Tot. Customers Q3</th>
+                            <th>Ret. Cust. Q3</th>
+                            <th>Retention Rate Q3</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="crr : ${crrList}">
+                            <td th:text="${crr.product.name} "></td>
+                            <td th:text="${crr.yearStatistic.year} "></td>
+                            <td th:text="${crr.totalCustomersQ3} "></td>
+                            <td th:text="${crr.returningCustomersQ3}"></td>
+                            <td th:text="${crr.retentionRateQ3}"></td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
+                    <br />
+                    <p style="font-size: medium">Quarter 4</p>
+                    <table class="table table-xs mb-0">
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Year</th>
+                          <th>Tot. Customers Q4</th>
+                          <th>Ret. Cust. Q4</th>
+                          <th>Retention Rate Q4</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="crr : ${crrList}">
+                          <td th:text="${crr.product.name} "></td>
+                          <td th:text="${crr.yearStatistic.year} "></td>
+                          <td th:text="${crr.totalCustomersQ4} "></td>
+                          <td th:text="${crr.returningCustomersQ4}"></td>
+                          <td th:text="${crr.retentionRateQ4}"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br />
+                    <p style="font-size: medium">Update or delete</p>
+                    <table class="table table-xs mb-0">
+                      <thead>
+                        <tr>
+                          <th>Update</th>
+                          <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="crr : ${crrList}">
+                          <td>
+                            <a
+                              th:href="@{/crr/edit/{id}(id=${crr.id})}"
+                              class="btn btn-warning"
+                              ><i class="fa fa-edit ml-2"></i
+                            ></a>
+                          </td>
+                          <td>
+                            <a
+                              onclick="return confirm('Confirm deletion please!');"
+                              th:href="@{/crr/delete/{id}(id=${crr.id})}"
+                              class="btn btn-danger"
+                            >
+                              <i class="fa fa-trash ml-2"></i
+                            ></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="d-flex justify-content-end mt-3">
+                    <a th:href="@{/crr/add}" class="btn btn-primary ml-auto">
+                      Add CRR
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </a>
+                    <a
+                      th:href="@{/statistics/dashboard}"
+                      class="btn btn-secondary ml-2"
+                    >
+                      Go to Dashboard <i class="fa fa-list ml-2"></i>
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- #/ container -->
       </div>
-      <!--**********************************
+    </div>
+    <!-- #/ container -->
+    <!--**********************************
             Content body end
         ***********************************-->
 
-      <!--**********************************
+    <!--**********************************
             Footer start
         ***********************************-->
-      <div class="footer">
-        <div class="copyright">
-          <p>
-            Copyright &copy; Designed & Developed by
-            <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
-          </p>
-        </div>
+    <div class="footer">
+      <div class="copyright">
+        <p>
+          Copyright &copy; Designed & Developed by
+          <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+        </p>
       </div>
-      <!--**********************************
+    </div>
+    <!--**********************************
             Footer end
         ***********************************-->
-    </div>
     <!--**********************************
         Main wrapper end
     ***********************************-->

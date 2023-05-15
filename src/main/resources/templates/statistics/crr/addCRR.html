@@ -6,176 +6,324 @@
     <!--**********************************
             Nav header start
         ***********************************-->
-        <div th:replace="fragments/nav-header :: nav-header"></div>
-        <!--**********************************
+    <div th:replace="fragments/nav-header :: nav-header"></div>
+    <!--**********************************
               Nav header end
           ***********************************-->
-  
-        <!--**********************************
+
+    <!--**********************************
               Header start
           ***********************************-->
-        <div th:replace="fragments/header :: header"></div>
-        <!--**********************************
+    <div th:replace="fragments/header :: header"></div>
+    <!--**********************************
               Header end ti-comment-alt
           ***********************************-->
-  
-        <!--**********************************
+
+    <!--**********************************
               Sidebar start
           ***********************************-->
-        <div th:replace="fragments/sidebar :: sidebar"></div>
-        <!--**********************************
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <!--**********************************
               Sidebar end
           ***********************************-->
     <!--**********************************
             Content body start
         ***********************************-->
-      <div class="content-body">
-        <div class="row page-titles mx-0">
-          <div class="col p-md-0">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="javascript:void(0)">Dashboard</a>
-              </li>
-              <li class="breadcrumb-item active">
-                <a href="javascript:void(0)">Home</a>
-              </li>
-            </ol>
-          </div>
+    <div class="content-body">
+      <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="javascript:void(0)">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">
+              <a href="javascript:void(0)">Home</a>
+            </li>
+          </ol>
         </div>
-        <!-- row -->
+      </div>
+      <!-- row -->
 
-        <div class="container-fluid">
-          <div class="row justify-content-center">
-            <div class="col-lg-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="form-validation">
-                    <form
-                      class="form-valide"
-                      th:action="@{/crr/add}"
-                      th:object="${crr}"
-                      method="post"
-                      enctype="multipart/form-data"
-                    >
-                      <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="label"
-                          >product <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-lg-6">
-                          <input
-                            name="product"
-                            placeholder="Enter a product.."
-                            type="text"
-                            th:field="*{product}"
-                            class="form-control"
-                            required
-                            id="product"
-                          />
-                        </div>
-                        <span
-                          th:if="${#fields.hasErrors('product')}"
-                          th:errors="*{product}"
-                          class="text-danger"
-                        ></span>
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="form-validation">
+                  <form
+                    class="form-valide"
+                    th:action="@{/crr/add}"
+                    th:object="${crr}"
+                    method="post"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="form-group row">
+                      <label class="col-lg-4 col-form-label" for="productId"
+                        >Product <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-lg-6">
+                        <select
+                          class="form-control"
+                          id="productId"
+                          name="productId"
+                          required
+                        >
+                          <option disabled selected value>Please select</option>
+                          <option
+                            th:each="product: ${listProducts}"
+                            th:value="${product.id}"
+                            th:text="${product.name}"
+                          ></option>
+                        </select>
                       </div>
-                      <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="label"
-                          >date <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-lg-6">
-                          <input
-                            name="date"
-                            placeholder="Enter a date.."
-                            type="month"
-                            th:field="*{date}"
-                            class="form-control"
-                            required
-                            id="date"
-                          />
-                        </div>
-                        <span
-                          th:if="${#fields.hasErrors('date')}"
-                          th:errors="*{date}"
-                          class="text-danger"
-                        ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-4 col-form-label" for="yearId"
+                        >Year <span class="text-danger">*</span>
+                      </label>
+                      <div class="col-lg-6">
+                        <select
+                          class="form-control"
+                          id="yearId"
+                          name="yearId"
+                          required
+                        >
+                          <option disabled selected value>Please select</option>
+                          <option
+                            th:each="year: ${listYears}"
+                            th:value="${year.id}"
+                            th:text="${year.year}"
+                          ></option>
+                        </select>
                       </div>
-                      <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="label"
-                          >totalCustomers <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-lg-6">
-                          <input
-                            name="totalCustomers"
-                            placeholder="Enter a totalCustomers.."
-                            type="number"
-                            th:field="*{totalCustomers}"
-                            class="form-control"
-                            required
-                            id="totalCustomers"
-                          />
-                        </div>
-                        <span
-                          th:if="${#fields.hasErrors('totalCustomers')}"
-                          th:errors="*{totalCustomers}"
-                          class="text-danger"
-                        ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="totalCustomersQ1"
+                        >totalCustomersQ1
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="totalCustomersQ1"
+                          placeholder="Enter a totalCustomersQ1.."
+                          type="number"
+                          th:field="*{totalCustomersQ1}"
+                          class="form-control"
+                          required
+                          id="totalCustomersQ1"
+                        />
                       </div>
-                      <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="label"
-                          >returningCustomers <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-lg-6">
-                          <input
-                            name="returningCustomers"
-                            placeholder="Enter a returningCustomers.."
-                            type="number"
-                            th:field="*{returningCustomers}"
-                            class="form-control"
-                            required
-                            id="returningCustomers"
-                          />
-                        </div>
-                        <span
-                          th:if="${#fields.hasErrors('returningCustomers')}"
-                          th:errors="*{returningCustomers}"
-                          class="text-danger"
-                        ></span>
+                      <span
+                        th:if="${#fields.hasErrors('totalCustomersQ1')}"
+                        th:errors="*{totalCustomersQ1}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="returningCustomersQ1"
+                        >returningCustomersQ1
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="returningCustomersQ1"
+                          placeholder="Enter a returningCustomersQ1.."
+                          type="number"
+                          th:field="*{returningCustomersQ1}"
+                          class="form-control"
+                          required
+                          id="returningCustomersQ1"
+                        />
                       </div>
-                      <div class="form-group row">
-                        <div class="col-lg-8 ml-auto">
-                          <button type="submit" class="btn btn-primary">
-                            Submit
-                          </button>
-                        </div>
+                      <span
+                        th:if="${#fields.hasErrors('returningCustomersQ1')}"
+                        th:errors="*{returningCustomersQ1}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="totalCustomersQ2"
+                        >totalCustomersQ2
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="totalCustomersQ2"
+                          placeholder="Enter a totalCustomersQ2.."
+                          type="number"
+                          th:field="*{totalCustomersQ2}"
+                          class="form-control"
+                          required
+                          id="totalCustomersQ2"
+                        />
                       </div>
-                    </form>
-                  </div>
+                      <span
+                        th:if="${#fields.hasErrors('totalCustomersQ2')}"
+                        th:errors="*{totalCustomersQ2}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="returningCustomersQ2"
+                        >returningCustomersQ2
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="returningCustomersQ2"
+                          placeholder="Enter a returningCustomersQ2.."
+                          type="number"
+                          th:field="*{returningCustomersQ2}"
+                          class="form-control"
+                          required
+                          id="returningCustomersQ2"
+                        />
+                      </div>
+                      <span
+                        th:if="${#fields.hasErrors('returningCustomersQ2')}"
+                        th:errors="*{returningCustomersQ2}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="totalCustomersQ3"
+                        >totalCustomersQ3
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="totalCustomersQ3"
+                          placeholder="Enter a totalCustomersQ3.."
+                          type="number"
+                          th:field="*{totalCustomersQ3}"
+                          class="form-control"
+                          required
+                          id="totalCustomersQ3"
+                        />
+                      </div>
+                      <span
+                        th:if="${#fields.hasErrors('totalCustomersQ3')}"
+                        th:errors="*{totalCustomersQ3}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="returningCustomersQ3"
+                        >returningCustomersQ3
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="returningCustomersQ3"
+                          placeholder="Enter a returningCustomersQ3.."
+                          type="number"
+                          th:field="*{returningCustomersQ3}"
+                          class="form-control"
+                          required
+                          id="returningCustomersQ3"
+                        />
+                      </div>
+                      <span
+                        th:if="${#fields.hasErrors('returningCustomersQ3')}"
+                        th:errors="*{returningCustomersQ3}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="totalCustomersQ4"
+                        >totalCustomersQ4
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="totalCustomersQ4"
+                          placeholder="Enter a totalCustomersQ4.."
+                          type="number"
+                          th:field="*{totalCustomersQ4}"
+                          class="form-control"
+                          required
+                          id="totalCustomersQ4"
+                        />
+                      </div>
+                      <span
+                        th:if="${#fields.hasErrors('totalCustomersQ4')}"
+                        th:errors="*{totalCustomersQ4}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <div class="form-group row">
+                      <label
+                        class="col-lg-4 col-form-label"
+                        for="returningCustomersQ4"
+                        >returningCustomersQ4
+                        <span class="text-danger">*</span></label
+                      >
+                      <div class="col-lg-6">
+                        <input
+                          name="returningCustomersQ4"
+                          placeholder="Enter a returningCustomersQ4.."
+                          type="number"
+                          th:field="*{returningCustomersQ4}"
+                          class="form-control"
+                          required
+                          id="returningCustomersQ4"
+                        />
+                      </div>
+                      <span
+                        th:if="${#fields.hasErrors('returningCustomersQ4')}"
+                        th:errors="*{returningCustomersQ4}"
+                        class="text-danger"
+                      ></span>
+                    </div>
+                    <!-- repeat the above code for totalCustomersQ2, returningCustomersQ2, totalCustomersQ3, returningCustomersQ3, totalCustomersQ4, and returningCustomersQ4 -->
+                    <div class="form-group row">
+                      <div class="col-lg-8 ml-auto">
+                        <button type="submit" class="btn btn-primary">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- #/ container -->
       </div>
-      <!--**********************************
+      <!-- #/ container -->
+    </div>
+    <!--**********************************
             Content body end
         ***********************************-->
 
-      <!--**********************************
+    <!--**********************************
             Footer start
         ***********************************-->
-      <div class="footer">
-        <div class="copyright">
-          <p>
-            Copyright &copy; Designed & Developed by
-            <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
-          </p>
-        </div>
+    <div class="footer">
+      <div class="copyright">
+        <p>
+          Copyright &copy; Designed & Developed by
+          <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+        </p>
       </div>
-      <!--**********************************
+    </div>
+    <!--**********************************
             Footer end
         ***********************************-->
-    </div>
     <!--**********************************
         Main wrapper end
     ***********************************-->
@@ -183,6 +331,7 @@
     <!--**********************************
         Scripts
     ***********************************-->
+    <!-- Output listProducts and listYears to console -->
     <script th:src="@{/front/plugins/common/common.min.js}"></script>
     <script th:src="@{/front/js/custom.min.js}"></script>
     <script th:src="@{/front/js/settings.js}"></script>

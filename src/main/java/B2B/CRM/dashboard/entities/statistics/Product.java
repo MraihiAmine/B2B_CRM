@@ -16,7 +16,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,8 @@ public class Product {
     private float price;
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "product")
-    private List<CustomerRetentionRateEntity> CRRs;
+    private List<CustomerRetentionRateEntity> customerRetentionRateEntities;
+
 }
 
 
