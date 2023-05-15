@@ -87,7 +87,13 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">CRR</h4>
-                  <div id="CRRChart" class="ct-chart ct-golden-section"></div>
+                  <canvas
+                    id="sales-chart"
+                    width="671"
+                    height="201"
+                    style="display: block; height: 161px; width: 537px"
+                    class="chartjs-render-monitor"
+                  ></canvas>
                   <div class="d-flex justify-content-end mt-3">
                     <a th:href="@{/crr/add}" class="btn btn-primary ml-auto">
                       Add CRR
@@ -131,24 +137,15 @@
         Scripts
     ***********************************-->
     <script th:inline="javascript">
-      var npsEntities = [[${npsEntities}]];
-      var CRR = [[${customerRetentionRateList}]];
-      console.log("CRR", CRR);
+      var products= [[${products}]];
     </script>
-    <!-- jQuery and Bootstrap JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
-
     <script th:src="@{/front/plugins/common/common.min.js}"></script>
     <script th:src="@{/front/js/custom.min.js}"></script>
     <script th:src="@{/front/js/settings.js}"></script>
     <script th:src="@{/front/js/gleek.js}"></script>
     <script th:src="@{/front/js/styleSwitcher.js}"></script>
 
-    <script th:src="@{/front/./plugins/chartist/js/chartist.min.js}"></script>
-    <script
-      th:src="@{/front/./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js}"
-    ></script>
-    <script th:src="@{/front/./js/plugins-init/chartist.init.js}"></script>
+    <script th:src="@{/front/plugins/chart.js/Chart.bundle.min.js}"></script>
+    <script th:src="@{/front/js/plugins-init/chartjs-init.js}"></script>
   </body>
 </html>

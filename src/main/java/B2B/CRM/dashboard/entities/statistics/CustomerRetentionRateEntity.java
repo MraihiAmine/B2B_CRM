@@ -1,18 +1,19 @@
 package B2B.CRM.dashboard.entities.statistics;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 @AllArgsConstructor
@@ -21,13 +22,25 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @Entity
-@ToString
+// @ToString
 @Table(name = "customer_retention_rate")
 public class CustomerRetentionRateEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Product product;
+
+  // @JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "year_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private YearStatistic yearStatistic;
 
 
   // Total customers for Q1
