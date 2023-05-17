@@ -27,44 +27,82 @@
         </li>
         <li>
           <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-            <i class="icon-home menu-icon"></i
-            ><span class="nav-text">Providers</span>
+            <i class="icon-eyeglass menu-icon"></i
+            ><span class="nav-text">Products</span>
           </a>
           <ul aria-expanded="false">
             <li>
-              <a th:href="@{/provider/list}">
+              <a th:href="@{/product/list}">
                 <i class="icon-list menu-icon"></i
-                ><span class="nav-text">list of providers</span></a
+                ><span class="nav-text">list of products</span></a
               >
             </li>
             <li>
-              <a th:href="@{/provider/add}">
+              <a th:href="@{/product/add}">
                 <i class="icon-plus menu-icon"></i
-                ><span class="nav-text">add provider</span></a
+                ><span class="nav-text">add product</span></a
               >
             </li>
-            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
           </ul>
         </li>
         <li>
           <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-            <i class="icon-earphones menu-icon"></i
-            ><span class="nav-text">Articles</span>
+            <i class="icon-calender menu-icon"></i
+            ><span class="nav-text">Year of stats</span>
           </a>
           <ul aria-expanded="false">
             <li>
-              <a th:href="@{/article/list}">
+              <a th:href="@{/year_statistics/list}">
                 <i class="icon-list menu-icon"></i
-                ><span class="nav-text">list of articles</span></a
+                ><span class="nav-text">list of years</span></a
               >
             </li>
             <li>
-              <a th:href="@{/article/add}">
+              <a th:href="@{/year_statistics/add}">
                 <i class="icon-plus menu-icon"></i
-                ><span class="nav-text">add article</span></a
+                ><span class="nav-text">add year stat</span></a
               >
             </li>
-            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-calculator menu-icon"></i
+            ><span class="nav-text">SGR</span>
+          </a>
+          <ul aria-expanded="false">
+            <li>
+              <a th:href="@{/sgr/list}">
+                <i class="icon-list menu-icon"></i
+                ><span class="nav-text">list of SGRs</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/sgr/add}">
+                <i class="icon-plus menu-icon"></i
+                ><span class="nav-text">add SGR</span></a
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <i class="icon-calculator menu-icon"></i
+            ><span class="nav-text">CRR</span>
+          </a>
+          <ul aria-expanded="false">
+            <li>
+              <a th:href="@{/crr/list}">
+                <i class="icon-list menu-icon"></i
+                ><span class="nav-text">list of CRRs</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/crr/add}">
+                <i class="icon-plus menu-icon"></i
+                ><span class="nav-text">add CRR</span></a
+              >
+            </li>
           </ul>
         </li>
       </ul>
