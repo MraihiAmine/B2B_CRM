@@ -152,7 +152,7 @@ public class SalesGrowthRateController {
 
     System.out.println("year");
     System.out.println(year);
-
+    salesGrowthRateEntity.calculateSalesGrowthRateQuarters();
     salesGrowthRateEntity.setYearStatistic(year);
     salesGrowthRateRepository.save(salesGrowthRateEntity);
     return "redirect:list";
