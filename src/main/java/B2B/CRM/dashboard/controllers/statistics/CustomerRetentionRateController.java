@@ -5,21 +5,14 @@ import B2B.CRM.dashboard.entities.statistics.Product;
 import B2B.CRM.dashboard.entities.statistics.YearStatistic;
 import B2B.CRM.dashboard.repositories.statisitics.CustomerRetentionRateRepository;
 import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
-import B2B.CRM.dashboard.repositories.statisitics.SalesStatisticsRepository;
 import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/crr/")

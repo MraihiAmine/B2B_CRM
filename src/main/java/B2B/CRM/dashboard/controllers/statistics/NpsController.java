@@ -4,7 +4,6 @@ import B2B.CRM.dashboard.entities.statistics.NpsEntity;
 import B2B.CRM.dashboard.entities.statistics.SalesGrowthRateEntity;
 import B2B.CRM.dashboard.repositories.statisitics.NpsRepository;
 import B2B.CRM.dashboard.services.statistics.NpsEntityService;
-import B2B.CRM.dashboard.services.statistics.SalesGrowthRateRateService;
 
 import java.util.List;
 import java.util.Optional;

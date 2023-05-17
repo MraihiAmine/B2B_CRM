@@ -1,59 +1,160 @@
 package B2B.CRM.dashboard.controllers.statistics;
 
-
+import B2B.CRM.dashboard.entities.statistics.Product;
 import B2B.CRM.dashboard.entities.statistics.SalesGrowthRateEntity;
+import B2B.CRM.dashboard.entities.statistics.YearStatistic;
+import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesGrowthRateRepository;
-import B2B.CRM.dashboard.services.statistics.SalesGrowthRateRateService;
+import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
+import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/sales")
+@Controller
+@RequestMapping("/sgr")
 public class SalesGrowthRateController {
 
-    @Autowired
-    private SalesGrowthRateRepository salesRepository;
+  private final SalesGrowthRateRepository salesGrowthRateRepository;
 
-    @Autowired
-    private SalesGrowthRateRateService salesGrowthRateRateService;
+  private final ProductRepository productRepository;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<SalesGrowthRateEntity> getSalesGrowthRateById(@PathVariable(value = "id") Long id) {
-        Optional<SalesGrowthRateEntity> salesStatistics = salesRepository.findById(id);
-        return salesStatistics.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+  private final YearStatisticRepository yearStatisticRepository;
+
+  @Autowired
+  SalesGrowthRateController(
+    SalesGrowthRateRepository salesGrowthRateRepository,
+    ProductRepository productRepository,
+    YearStatisticRepository yearStatisticRepository
+  ) {
+    this.salesGrowthRateRepository = salesGrowthRateRepository;
+    this.productRepository = productRepository;
+    this.yearStatisticRepository = yearStatisticRepository;
+  }
+
+  @GetMapping("list")
+  public String listProviders(Model model) {
+    List<SalesGrowthRateEntity> la = salesGrowthRateRepository.findAll();
+    if (la.size() == 0) la = null;
+    model.addAttribute("sgrList", la);
+    return "statistics/sgr/listSGR";
+  }
+
+  @GetMapping("add")
+  public String showAddArticleForm(Model model) {
+    List<Product> lp = productRepository.findAll();
+    if (lp.isEmpty()) lp = null;
+    List<YearStatistic> ly = yearStatisticRepository.findAll();
+    if (ly.isEmpty()) ly = null;
+
+    model.addAttribute("listProducts", lp);
+    model.addAttribute("listYears", ly);
+    model.addAttribute("sgr", new SalesGrowthRateEntity());
+    return "statistics/sgr/addSGR";
+  }
+
+  @PostMapping("add")
+  //@ResponseBody
+  public String addArticle(
+    Model model,
+    @Valid SalesGrowthRateEntity salesGrowthRateEntity,
+    @RequestParam(name = "yearId", required = true) Long y,
+    @RequestParam(name = "productId", required = true) Long p,
+    BindingResult result
+  ) {
+    if (result.hasErrors()) {
+      model.addAttribute("sgr", salesGrowthRateEntity);
+      return "statistics/sgr/addSGR";
     }
 
-    @PostMapping
-    public ResponseEntity<SalesGrowthRateEntity> createSalesGrowthRate(@RequestBody SalesGrowthRateEntity salesGrowthRateEntity) {
-        SalesGrowthRateEntity savedEntity = salesGrowthRateRateService.create(salesGrowthRateEntity);
-        return ResponseEntity.ok(savedEntity);
+    Product product = productRepository
+      .findById(p)
+      .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
+      );
+
+    salesGrowthRateEntity.setProduct(product);
+
+    YearStatistic year = yearStatisticRepository
+      .findById(y)
+      .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y));
+
+    System.out.println("year");
+    System.out.println(year);
+
+    salesGrowthRateEntity.setYearStatistic(year);
+
+    salesGrowthRateEntity.calculateSalesGrowthRateQuarters();
+    System.out.println(salesGrowthRateEntity.toString());
+    salesGrowthRateRepository.save(salesGrowthRateEntity);
+    return "redirect:list";
+  }
+
+  @GetMapping("delete/{id}")
+  public String deleteProvider(@PathVariable("id") long id, Model model) {
+    SalesGrowthRateEntity salesGrowthRateEntity = salesGrowthRateRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new IllegalArgumentException("Invalid provider Id:" + id)
+      );
+    salesGrowthRateRepository.delete(salesGrowthRateEntity);
+    return "redirect:/sgr/list";
+  }
+
+  @GetMapping("edit/{id}")
+  public String showArticleFormToUpdate(
+    @PathVariable("id") long id,
+    Model model
+  ) {
+    SalesGrowthRateEntity salesGrowthRateEntity = salesGrowthRateRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new IllegalArgumentException("Invalid provider Id:" + id)
+      );
+
+    List<Product> lp = productRepository.findAll();
+    if (lp.isEmpty()) lp = null;
+    List<YearStatistic> ly = yearStatisticRepository.findAll();
+    if (ly.isEmpty()) ly = null;
+
+    model.addAttribute("listProducts", lp);
+    model.addAttribute("listYears", ly);
+
+    model.addAttribute("sgr", salesGrowthRateEntity);
+    return "statistics/sgr/updateSGR";
+  }
+
+  @PostMapping("edit")
+  public String updateArticle(
+    @Valid SalesGrowthRateEntity salesGrowthRateEntity,
+    @RequestParam(name = "yearId", required = true) Long y,
+    @RequestParam(name = "productId", required = true) Long p,
+    BindingResult result,
+    Model model
+  ) {
+    if (result.hasErrors()) {
+      model.addAttribute("sgr", salesGrowthRateEntity);
+      return "statistics/sgr/updateSGR";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SalesGrowthRateEntity> updateSalesGrowthRate(@PathVariable(value = "id") Long id,
-                                                                       @RequestBody SalesGrowthRateEntity salesDetails) {
-        if (!salesRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        salesDetails.setId(id);
-        salesDetails.setActualSales(salesDetails.getActualSales());
-        salesDetails.setPreviousSales(salesDetails.getPreviousSales());
-        salesDetails.setSalesGrowthRate(salesDetails.calculateSalesGrowthRate());
+    Product product = productRepository
+      .findById(p)
+      .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
+      );
 
-        SalesGrowthRateEntity updatedSales = salesRepository.save(salesDetails);
-        return ResponseEntity.ok(updatedSales);
-    }
+    salesGrowthRateEntity.setProduct(product);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteSalesGrowthRate(@PathVariable(value = "id") Long id) {
-        if (!salesRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        salesRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
+    YearStatistic year = yearStatisticRepository
+      .findById(y)
+      .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y));
 
+    System.out.println("year");
+    System.out.println(year);
+
+    salesGrowthRateEntity.setYearStatistic(year);
+    salesGrowthRateRepository.save(salesGrowthRateEntity);
+    return "redirect:list";
+  }
 }
