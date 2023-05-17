@@ -33,7 +33,7 @@ public class SalesGrowthRateEntity {
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Product product;
 
-  @JsonIgnore
+  // @JsonIgnore
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "year_id", nullable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
