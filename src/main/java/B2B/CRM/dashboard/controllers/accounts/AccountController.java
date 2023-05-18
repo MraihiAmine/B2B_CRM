@@ -100,8 +100,6 @@ public class AccountController {
 
         userService.saveUser(user);
         return "redirect:list";
-
-        //return article.getLabel() + " " +article.getPrice() + " " + p.toString();
     }
 
     @GetMapping("list")
