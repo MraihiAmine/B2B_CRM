@@ -83,6 +83,16 @@
               </div>
             </div>
           </div>
+          <h4
+            style="
+              text-align: center;
+              padding: 5px;
+              border-bottom: solid;
+              border-top: solid;
+            "
+          >
+            Sales statistics
+          </h4>
           <div class="row">
             <div class="col-lg-6">
               <div class="card">
@@ -131,6 +141,64 @@
               </div>
             </div>
           </div>
+          <h4
+            style="
+              text-align: center;
+              padding: 5px;
+              border-bottom: solid;
+              border-top: solid;
+            "
+          >
+            Prospections statistics
+          </h4>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Conversion rate</h4>
+                  <canvas
+                    id="CR-chart"
+                    width="671"
+                    height="201"
+                    style="display: block; height: 161px; width: 537px"
+                    class="chartjs-render-monitor"
+                  ></canvas>
+                  <div class="d-flex justify-content-end mt-3">
+                    <a th:href="@{/prospection/add}" class="btn btn-primary ml-auto">
+                      Add prospection
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </a>
+                    <a th:href="@{/prospection/list}" class="btn btn-secondary ml-2">
+                      List of prospections <i class="fa fa-list ml-2"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Average deal value</h4>
+                  <canvas
+                    id="adv-chart"
+                    width="671"
+                    height="201"
+                    style="display: block; height: 161px; width: 537px"
+                    class="chartjs-render-monitor"
+                  ></canvas>
+                  <div class="d-flex justify-content-end mt-3">
+                    <a th:href="@{/prospection/add}" class="btn btn-primary ml-auto">
+                      Add prospection
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </a>
+                    <a th:href="@{/prospection/list}" class="btn btn-secondary ml-2">
+                      List of prospections <i class="fa fa-list ml-2"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- #/ container -->
       </div>
@@ -168,10 +236,14 @@
         var selectedProductId;
         generateCRRChart(products, selectedProductId);
         generateSGRChart(products, selectedProductId);
+        generateCRChart(products, selectedProductId);
+        generateAVRChart(products, selectedProductId);
         $("#productId").change(function () {
           selectedProductId = $(this).val();
           generateCRRChart(products, selectedProductId);
           generateSGRChart(products, selectedProductId);
+          generateCRChart(products, selectedProductId);
+          generateAVRChart(products, selectedProductId);
         });
       });
     </script>
@@ -184,6 +256,8 @@
     <script th:src="@{/front/plugins/chart.js/Chart.bundle.min.js}"></script>
     <script th:src="@{/front/js/plugins-init/chartjs-init.js}"></script>
     <script th:src="@{/front/js/plugins-init/crr-chart.js}"></script>
+    <script th:src="@{/front/js/plugins-init/cr-chart.js}"></script>
+    <script th:src="@{/front/js/plugins-init/avr-chart.js}"></script>
     <script th:src="@{/front/js/plugins-init/sgr-chart.js}"></script>
   </body>
 </html>
