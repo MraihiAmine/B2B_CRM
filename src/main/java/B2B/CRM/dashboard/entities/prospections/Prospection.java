@@ -50,7 +50,6 @@ public class Prospection {
   private String email;
 
   @NotBlank(message = "phone name is mandatory")
-  @Email
   @Column(name = "phone")
   private String phone;
 
@@ -90,7 +89,19 @@ public class Prospection {
   @OnDelete(action = OnDeleteAction.CASCADE)
   private ProspectionStatus prospectionStatusQ4;
 
-  @NotNull(message = "value cannot be null")
-  @Min(value = 0, message = "value must be at least 0")
-  private double value;
+  @NotNull(message = "value Q1 cannot be null")
+  @Min(value = 0, message = "value Q1 must be at least 0")
+  private double valueQ1;
+  
+  @NotNull(message = "value Q2 cannot be null")
+  @Min(value = 0, message = "value Q2 must be at least 0")
+  private double valueQ2;
+  
+  @NotNull(message = "value Q3 cannot be null")
+  @Min(value = 0, message = "value Q3 must be at least 0")
+  private double valueQ3;
+  
+  @NotNull(message = "value Q4 cannot be null")
+  @Min(value = 0, message = "value Q4 must be at least 0")
+  private double valueQ4;
 }
