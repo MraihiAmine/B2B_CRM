@@ -3,6 +3,9 @@ package B2B.CRM.dashboard.entities.statistics;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+
+import B2B.CRM.dashboard.entities.prospections.AverageDealValue;
+import B2B.CRM.dashboard.entities.prospections.ConversionRate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,4 +41,10 @@ public class Product {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
   private List<SalesGrowthRateEntity> salesGrowthRateEntities;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+  private List<ConversionRate> conversionRateEntities;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+  private List<AverageDealValue> averageDealValues;
 }

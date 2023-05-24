@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <div th:replace="fragments/head :: head"></div>
 
   <body>
@@ -52,94 +52,29 @@
                   <div class="form-validation">
                     <form
                       class="form-valide"
-                      th:action="@{/crr/add}"
-                      th:object="${crr}"
+                      th:action="@{/prospection_status/add}"
+                      th:object="${prospectionStatus}"
                       method="post"
                       enctype="multipart/form-data"
                     >
                       <div class="form-group row">
-                        <input type="hidden" th:field="*{id}" />
                         <label class="col-lg-4 col-form-label" for="label"
-                          >product <span class="text-danger">*</span>
+                          >status <span class="text-danger">*</span>
                         </label>
                         <div class="col-lg-6">
                           <input
-                            name="product"
-                            placeholder="Enter a product.."
+                            name="status"
+                            placeholder="Enter a status.."
                             type="text"
-                            th:field="*{product}"
+                            th:field="*{status}"
                             class="form-control"
                             required
-                            id="product"
+                            id="status"
                           />
                         </div>
                         <span
-                          th:if="${#fields.hasErrors('product')}"
-                          th:errors="*{product}"
-                          class="text-danger"
-                        ></span>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="label"
-                          >date <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-lg-6">
-                          <input
-                            name="date"
-                            placeholder="Enter a date.."
-                            type="date"
-                            th:field="*{date}"
-                            class="form-control"
-                            required
-                            id="date"
-                          />
-                          <input type="hidden" name="dateString" th:value="${#dates.format(date, 'yyyy-MM-dd')}" />
-                        </div>
-                        <span
-                          th:if="${#fields.hasErrors('date')}"
-                          th:errors="*{date}"
-                          class="text-danger"
-                        ></span>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="label"
-                          >totalCustomers <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-lg-6">
-                          <input
-                            name="totalCustomers"
-                            placeholder="Enter a totalCustomers.."
-                            type="number"
-                            th:field="*{totalCustomers}"
-                            class="form-control"
-                            required
-                            id="totalCustomers"
-                          />
-                        </div>
-                        <span
-                          th:if="${#fields.hasErrors('totalCustomers')}"
-                          th:errors="*{totalCustomers}"
-                          class="text-danger"
-                        ></span>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-lg-4 col-form-label" for="label"
-                          >returningCustomers <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-lg-6">
-                          <input
-                            name="returningCustomers"
-                            placeholder="Enter a returningCustomers.."
-                            type="number"
-                            th:field="*{returningCustomers}"
-                            class="form-control"
-                            required
-                            id="returningCustomers"
-                          />
-                        </div>
-                        <span
-                          th:if="${#fields.hasErrors('returningCustomers')}"
-                          th:errors="*{returningCustomers}"
+                          th:if="${#fields.hasErrors('status')}"
+                          th:errors="*{status}"
                           class="text-danger"
                         ></span>
                       </div>
