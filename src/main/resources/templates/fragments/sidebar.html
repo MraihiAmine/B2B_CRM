@@ -27,13 +27,13 @@
         </li>
         <li>
           <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-            <i class="icon-settings menu-icon"></i
+            <i class="icon-target menu-icon"></i
             ><span class="nav-text">Manage prospections</span>
           </a>
           <ul aria-expanded="false">
             <li>
               <a th:href="@{/prospection_status/list}">
-                <i class="icon-people menu-icon"></i
+                <i class="icon-frame menu-icon"></i
                 ><span class="nav-text">status</span></a
               >
             </li>
@@ -41,6 +41,18 @@
               <a th:href="@{/prospection_status/add}">
                 <i class="icon-plus menu-icon"></i
                 ><span class="nav-text">Add status</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/prospection/list}">
+                <i class="icon-list menu-icon"></i
+                ><span class="nav-text">List of prospections</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/prospection/add}">
+                <i class="icon-plus menu-icon"></i
+                ><span class="nav-text">Add prospection</span></a
               >
             </li>
           </ul>
