@@ -19,3 +19,8 @@ services:
       - "8080:8080"
     depends_on:
       - mysql-standalone
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
