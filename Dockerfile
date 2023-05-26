@@ -1,9 +1,14 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG JAVA_OPTS
-ENV JAVA_OPTS=$JAVA_OPTS
-COPY target/dashboard-0.0.1-SNAPSHOT.jar dashboard.jar
-EXPOSE 3000
-ENTRYPOINT exec java $JAVA_OPTS -jar dashboard.jar
-# For Spring-Boot project, use the entrypoint below to reduce Tomcat startup time.
-ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar dashboard.jar
+# Use a base image with Java 11 installed
+FROM adoptopenjdk:11-jdk-hotspot
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the JAR file into the container
+COPY target/dashboard-0.0.1-SNAPSHOT.jar /app/dashboard.jar
+
+# Expose the port on which the application will run
+EXPOSE 8080
+
+# Set the command to run when the container starts
+CMD ["java", "-jar", "dashboard.jar"]
