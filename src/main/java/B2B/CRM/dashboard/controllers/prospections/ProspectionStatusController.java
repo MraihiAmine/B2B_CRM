@@ -5,6 +5,10 @@ import B2B.CRM.dashboard.repositories.prospections.*;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import B2B.CRM.dashboard.services.acoounts.UserService;
+import org.springframework.security.core.Authentication;
+import B2B.CRM.dashboard.entities.accounts.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,16 +21,33 @@ public class ProspectionStatusController {
   @Autowired
   private ProspectionStatusRepository prospectionStatusRepository;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping("list")
   public String index(Model model) {
     List<ProspectionStatus> ls = prospectionStatusRepository.findAll();
     if (ls.isEmpty()) ls = null;
+    Authentication auth = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    User user = userService.findUserByEmail(auth.getName());
+    System.out.println(user.getRoles());
+    String userRole = user.getRoles().iterator().next().getRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("prospectionStatusList", ls);
     return "prospections/prospectionStatus/list";
   }
 
   @GetMapping("/add")
   public String newProspectionStatus(Model model) {
+    Authentication auth = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    User user = userService.findUserByEmail(auth.getName());
+    System.out.println(user.getRoles());
+    String userRole = user.getRoles().iterator().next().getRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("prospectionStatus", new ProspectionStatus());
     return "prospections/prospectionStatus/add";
   }
@@ -52,6 +73,13 @@ public class ProspectionStatusController {
         new IllegalArgumentException("Invalid ProspectionStatus ID: " + id)
       );
 
+    Authentication auth = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    User user = userService.findUserByEmail(auth.getName());
+    System.out.println(user.getRoles());
+    String userRole = user.getRoles().iterator().next().getRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("prospectionStatus", prospectionStatus);
     return "prospections/prospectionStatus/update";
   }

@@ -76,6 +76,8 @@ public class LoginController {
         return modelAndView;
     }
 
+    
+
     @GetMapping("/403")
     public String reddirectError403() {
         return "redirect:../accessDenied";

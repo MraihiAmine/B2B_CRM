@@ -2,6 +2,7 @@ package B2B.CRM.dashboard.controllers.statistics;
 
 import B2B.CRM.dashboard.entities.statistics.YearStatistic;
 import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
+import B2B.CRM.dashboard.services.acoounts.UserService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,23 @@ public class YearStatisticController {
   @Autowired
   private YearStatisticRepository yearStatisticRepository;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping("list")
   public String index(Model model) {
     List<YearStatistic> ls = yearStatisticRepository.findAll();
     if (ls.isEmpty()) ls = null;
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("yearStatisticsList", ls);
     return "statistics/yearStatistic/list";
   }
 
   @GetMapping("/add")
   public String newYearStatistic(Model model) {
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("yearStatistic", new YearStatistic());
     return "statistics/yearStatistic/add";
   }
@@ -52,6 +60,8 @@ public class YearStatisticController {
         new IllegalArgumentException("Invalid YearStatistic ID: " + id)
       );
 
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("yearStatistic", yearStatistic);
     return "statistics/yearStatistic/update";
   }

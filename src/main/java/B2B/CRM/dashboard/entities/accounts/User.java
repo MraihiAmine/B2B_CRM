@@ -2,17 +2,20 @@ package B2B.CRM.dashboard.entities.accounts;
 
 import org.hibernate.validator.constraints.Length;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 @Entity
 @Table(name = "user")
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private int id;
+    private Long id;
 
     @Column(name = "email")
     @Email(message = "*Please provide a valid Email")
@@ -32,17 +35,17 @@ public class User {
     private String lastName;
 
     @Column(name = "active")
-    private int active;
+    private Long active;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     private String picture;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getEmail() {
@@ -69,10 +72,10 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public int getActive() {
+    public Long getActive() {
         return active;
     }
-    public void setActive(int active) {
+    public void setActive(Long active) {
         this.active = active;
     }
     public Set<Role> getRoles() {
