@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import B2B.CRM.dashboard.services.acoounts.UserService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,9 @@ public class SalesGrowthRateController {
   private final ProductRepository productRepository;
 
   private final YearStatisticRepository yearStatisticRepository;
+
+  @Autowired
+  private UserService userService;
 
   @Autowired
   SalesGrowthRateController(
@@ -39,6 +43,8 @@ public class SalesGrowthRateController {
   public String listProviders(Model model) {
     List<SalesGrowthRateEntity> la = salesGrowthRateRepository.findAll();
     if (la.size() == 0) la = null;
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("sgrList", la);
     return "statistics/sgr/listSGR";
   }
@@ -49,7 +55,8 @@ public class SalesGrowthRateController {
     if (lp.isEmpty()) lp = null;
     List<YearStatistic> ly = yearStatisticRepository.findAll();
     if (ly.isEmpty()) ly = null;
-
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("listProducts", lp);
     model.addAttribute("listYears", ly);
     model.addAttribute("sgr", new SalesGrowthRateEntity());
@@ -118,6 +125,9 @@ public class SalesGrowthRateController {
     if (lp.isEmpty()) lp = null;
     List<YearStatistic> ly = yearStatisticRepository.findAll();
     if (ly.isEmpty()) ly = null;
+
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
 
     model.addAttribute("listProducts", lp);
     model.addAttribute("listYears", ly);

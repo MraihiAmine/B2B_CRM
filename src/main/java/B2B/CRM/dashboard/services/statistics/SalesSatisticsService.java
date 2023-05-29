@@ -10,6 +10,8 @@ import B2B.CRM.dashboard.repositories.statisitics.NpsRepository;
 import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesGrowthRateRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesStatisticsRepository;
+import B2B.CRM.dashboard.services.acoounts.UserService;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class SalesSatisticsService {
-
+  @Autowired
+  private UserService userService;
+  
   @Autowired
   private SalesStatisticsRepository salesStatisticsRepository;
 
@@ -37,9 +41,10 @@ public class SalesSatisticsService {
     SalesStatisticsEntity salesStatistics = new SalesStatisticsEntity();
 
     List<Product> products = productRepository.findAll();
-
     salesStatisticsRepository.save(salesStatistics);
     ModelAndView modelAndView = new ModelAndView();
+    String userRole = userService.getConnectedUserRole();
+    modelAndView.addObject("userRole", userRole);
     modelAndView.addObject("products", products);
     modelAndView.setViewName("statistics/dashboard");
     return modelAndView;

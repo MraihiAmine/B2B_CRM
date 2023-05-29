@@ -58,25 +58,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .permitAll()
       // accès pour tous users
       .antMatchers("/login")
-      .permitAll() // access pour tous users
-      .antMatchers("/nps/**")
-      .permitAll() // accès pour tous users
+      .permitAll()
       .antMatchers("/sales-statistics/**")
-      .permitAll() // accès pour tous users
+      .hasAnyAuthority("Sales man", "SUPERADMIN")
       .antMatchers("/api/customer-retention-rates/**")
-      .permitAll() // accès pour tous users
+      .hasAnyAuthority("Sales man", "SUPERADMIN")
       .antMatchers("/registration")
-      .permitAll() // accès pour tous users
-      .antMatchers("/article/**")
-      .permitAll() // accès pour tous users
+      .permitAll()
       .antMatchers("/year_statistics/**")
-      .permitAll() // accès pour tous users
+      .hasAnyAuthority("Sales man", "SUPERADMIN")
+      .antMatchers("/sgr/**")
+      .hasAnyAuthority("Sales man", "SUPERADMIN")
+      .antMatchers("/prospection_status/**")
+      .hasAnyAuthority("Sales man", "SUPERADMIN")
+      .antMatchers("/prospection/**")
+      .hasAnyAuthority("Sales man", "SUPERADMIN")
+      .antMatchers("/crr/**")
+      .hasAnyAuthority("Sales man", "SUPERADMIN")
       .antMatchers("/product/**")
       .permitAll() // accès pour tous users
-      .antMatchers("/user/add")
+      .antMatchers("/user/firstAdmin")
       .permitAll()
       .antMatchers("/accounts/profile")
-      .hasAnyAuthority("USER", "SUPERADMIN")
+      .permitAll()
       .antMatchers("/role/**")
       .hasAnyAuthority("ADMIN", "SUPERADMIN")
       .antMatchers("/accounts/add")

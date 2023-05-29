@@ -6,6 +6,7 @@ import B2B.CRM.dashboard.entities.statistics.YearStatistic;
 import B2B.CRM.dashboard.repositories.statisitics.CustomerRetentionRateRepository;
 import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
+import B2B.CRM.dashboard.services.acoounts.UserService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class CustomerRetentionRateController {
   private final YearStatisticRepository yearStatisticRepository;
 
   @Autowired
+  private UserService userService;
+
+  @Autowired
   CustomerRetentionRateController(
     CustomerRetentionRateRepository customerRetentionRateRepository,
     ProductRepository productRepository,
@@ -39,6 +43,8 @@ public class CustomerRetentionRateController {
   public String listProviders(Model model) {
     List<CustomerRetentionRateEntity> la = customerRetentionRateRepository.findAll();
     if (la.size() == 0) la = null;
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("crrList", la);
     return "statistics/crr/listCRR";
   }
@@ -50,6 +56,8 @@ public class CustomerRetentionRateController {
     List<YearStatistic> ly = yearStatisticRepository.findAll();
     if (ly.isEmpty()) ly = null;
 
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("listProducts", lp);
     model.addAttribute("listYears", ly);
     model.addAttribute("crr", new CustomerRetentionRateEntity());
@@ -74,17 +82,15 @@ public class CustomerRetentionRateController {
       .findById(p)
       .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
       );
-    
 
     customerRetentionRateEntity.setProduct(product);
 
     YearStatistic year = yearStatisticRepository
       .findById(y)
-      .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y)
-      );
+      .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y));
 
-      System.out.println("year");
-      System.out.println(year);
+    System.out.println("year");
+    System.out.println(year);
 
     customerRetentionRateEntity.setYearStatistic(year);
 
@@ -115,6 +121,8 @@ public class CustomerRetentionRateController {
         new IllegalArgumentException("Invalid provider Id:" + id)
       );
 
+    String userRole = userService.getConnectedUserRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("crr", customerRetentionRateEntity);
     return "statistics/crr/updateCRR";
   }
