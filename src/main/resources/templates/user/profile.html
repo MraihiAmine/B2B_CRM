@@ -32,21 +32,7 @@
       <!--**********************************
             Nav header start
         ***********************************-->
-      <div class="nav-header">
-        <div class="brand-logo">
-          <a href="index.html">
-            <b class="logo-abbr"
-              ><img src="@{/front/images/logo.png}" alt="" />
-            </b>
-            <span class="logo-compact"
-              ><img src="@{front/./images/logo-compact.png}" alt=""
-            /></span>
-            <span class="brand-title">
-              <p style="color: aliceblue; text-align: center;">HOME</p>
-            </span>
-          </a>
-        </div>
-      </div>
+      <div th:replace="fragments/nav-header :: nav-header"></div>
       <!--**********************************
             Nav header end
         ***********************************-->
@@ -100,7 +86,10 @@
                       alt=""
                     />
                     <div class="media-body">
-                      <h3 class="mb-0" th:text="${user.name + ' ' + user.lastName}"></h3>
+                      <h3
+                        class="mb-0"
+                        th:text="${user.name + ' ' + user.lastName}"
+                      ></h3>
                     </div>
                   </div>
 

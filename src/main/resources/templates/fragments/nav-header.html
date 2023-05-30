@@ -1,5 +1,5 @@
 <div th:fragment="nav-header">
-  <div class="nav-header">
+  <div class="nav-header" th:if="${userRole == 'SUPERADMIN' or userRole == 'Sales man'}">
     <div class="brand-logo">
       <a th:href="@{/sales-statistics/dashboard}">
         <b class="logo-abbr"
@@ -11,6 +11,23 @@
         <span>
           <p style="color: aliceblue; text-align: center">
             <i class="icon-speedometer menu-icon"></i> Dashboard
+          </p>
+        </span>
+      </a>
+    </div>
+  </div>
+  <div class="nav-header" th:if="${userRole == 'ADMIN'}">
+    <div class="brand-logo">
+      <a th:href="@{/accounts/list}">
+        <b class="logo-abbr"
+          ><img th:src="@{/front/images/logo.png}" alt="" />
+        </b>
+        <span class="logo-compact"
+          ><img th:src="@{/front/images/logo-compact.png}" alt=""
+        /></span>
+        <span>
+          <p style="color: aliceblue; text-align: center">
+            <i class="icon-people menu-icon"></i> USERS
           </p>
         </span>
       </a>
