@@ -8,6 +8,7 @@ import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
 import B2B.CRM.dashboard.services.acoounts.UserService;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,16 +84,21 @@ public class CustomerRetentionRateController {
       .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
       );
 
-    customerRetentionRateEntity.setProduct(product);
-
     YearStatistic year = yearStatisticRepository
       .findById(y)
       .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y));
 
-    System.out.println("year");
-    System.out.println(year);
-
+    customerRetentionRateEntity.setProduct(product);
     customerRetentionRateEntity.setYearStatistic(year);
+
+    Optional<CustomerRetentionRateEntity> optionalRetentionRate = customerRetentionRateRepository.findByYearStatisticAndProduct(
+      year,
+      product
+    );
+
+    if (optionalRetentionRate.isPresent()) {
+      customerRetentionRateEntity.setId(optionalRetentionRate.get().getId());
+    }
 
     customerRetentionRateEntity.calculateRetentionRateQuarters();
     customerRetentionRateRepository.save(customerRetentionRateEntity);

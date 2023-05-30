@@ -117,12 +117,11 @@ public class prospectionController {
       .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
       );
 
-    prospection.setProduct(product);
-
     YearStatistic year = yearStatisticRepository
       .findById(y)
       .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y));
 
+    prospection.setProduct(product);
     prospection.setYearStatistic(year);
 
     ProspectionStatus prospectionStatusQ1 = prospectionStatusRepository

@@ -6,12 +6,13 @@ import B2B.CRM.dashboard.entities.statistics.YearStatistic;
 import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.SalesGrowthRateRepository;
 import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
+import B2B.CRM.dashboard.services.acoounts.UserService;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import B2B.CRM.dashboard.services.acoounts.UserService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,19 +83,24 @@ public class SalesGrowthRateController {
       .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
       );
 
-    salesGrowthRateEntity.setProduct(product);
-
     YearStatistic year = yearStatisticRepository
       .findById(y)
       .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y));
 
-    System.out.println("year");
-    System.out.println(year);
-
+    salesGrowthRateEntity.setProduct(product);
     salesGrowthRateEntity.setYearStatistic(year);
 
+    Optional<SalesGrowthRateEntity> optionalSalesGrowthRate = salesGrowthRateRepository.findByYearStatisticAndProduct(
+      year,
+      product
+    );
+
+    if (optionalSalesGrowthRate.isPresent()) {
+      salesGrowthRateEntity.setId(optionalSalesGrowthRate.get().getId());
+    }
+
     salesGrowthRateEntity.calculateSalesGrowthRateQuarters();
-    System.out.println(salesGrowthRateEntity.toString());
+
     salesGrowthRateRepository.save(salesGrowthRateEntity);
     return "redirect:list";
   }

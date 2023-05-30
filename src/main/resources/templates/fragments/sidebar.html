@@ -23,6 +23,18 @@
                 ><span class="nav-text">Add user</span></a
               >
             </li>
+            <li>
+              <a th:href="@{/role/list}">
+                <i class="icon-people menu-icon"></i
+                ><span class="nav-text">Roles</span></a
+              >
+            </li>
+            <li>
+              <a th:href="@{/role/add}">
+                <i class="icon-plus menu-icon"></i
+                ><span class="nav-text">Add role</span></a
+              >
+            </li>
           </ul>
         </li>
         <li th:if="${userRole == 'SUPERADMIN' or userRole == 'Sales man'}">
