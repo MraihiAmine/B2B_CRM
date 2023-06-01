@@ -32,21 +32,7 @@
       <!--**********************************
             Nav header start
         ***********************************-->
-      <div class="nav-header">
-        <div class="brand-logo">
-          <a href="index.html">
-            <b class="logo-abbr"
-              ><img src="@{front/images/logo.png}" alt="" />
-            </b>
-            <span class="logo-compact"
-              ><img src="@{front/./images/logo-compact.png}" alt=""
-            /></span>
-            <span class="brand-title">
-              <p style="color: aliceblue; text-align: center;">HOME</p>
-            </span>
-          </a>
-        </div>
-      </div>
+      <div th:replace="fragments/nav-header :: nav-header"></div>
       <!--**********************************
             Nav header end
         ***********************************-->
@@ -94,13 +80,16 @@
                   <div class="media align-items-center mb-4">
                     <img
                       class="mr-3"
-                      th:src="@{front/images/avatar/11.png}"
+                      th:src="@{/front/images/avatar/11.png}"
                       width="80"
                       height="80"
                       alt=""
                     />
                     <div class="media-body">
-                      <h3 class="mb-0" th:text="${user.name + ' ' + user.lastName}"></h3>
+                      <h3
+                        class="mb-0"
+                        th:text="${user.name + ' ' + user.lastName}"
+                      ></h3>
                     </div>
                   </div>
 
@@ -108,8 +97,8 @@
                   <p class="text-muted">
                     Hi, My name is
                     <span th:text="${user.name + ' ' + user.lastName}"></span>
-                    and my role(s) :
-                    <span th:each="role : ${roles}" th:text="${role.role + ' ' }"></span>
+                    and my role is :
+                    <span th:text="${userRole + ' ' }"></span>
                   </p>
                   <ul class="card-profile__info">
                     <li class="mb-1">
@@ -172,7 +161,7 @@
                   <div class="media media-reply">
                     <img
                       class="mr-3 circle-rounded"
-                      th:src="@{front/images/avatar/2.jpg}"
+                      th:src="@{/front/images/avatar/2.jpg}"
                       width="50"
                       height="50"
                       alt="Generic placeholder image"
@@ -207,49 +196,10 @@
                         condimentum nunc ac nisi vulputate fringilla. Donec
                         lacinia congue felis in faucibus.
                       </p>
-                      <ul>
-                        <li class="d-inline-block">
-                          <img
-                            class="rounded"
-                            width="60"
-                            height="60"
-                            th:src="@{front/images/blog/2.jpg}"
-                            alt=""
-                          />
-                        </li>
-                        <li class="d-inline-block">
-                          <img
-                            class="rounded"
-                            width="60"
-                            height="60"
-                            th:src="@{front/images/blog/3.jpg}"
-                            alt=""
-                          />
-                        </li>
-                        <li class="d-inline-block">
-                          <img
-                            class="rounded"
-                            width="60"
-                            height="60"
-                            th:src="@{front/images/blog/4.jpg}"
-                            alt=""
-                          />
-                        </li>
-                        <li class="d-inline-block">
-                          <img
-                            class="rounded"
-                            width="60"
-                            height="60"
-                            th:src="@{front/images/blog/1.jpg}"
-                            alt=""
-                          />
-                        </li>
-                      </ul>
-
                       <div class="media mt-3">
                         <img
                           class="mr-3 circle-rounded circle-rounded"
-                          th:src="@{front/images/avatar/4.jpg}"
+                          th:src="@{/front/images/avatar/4.jpg}"
                           width="50"
                           height="50"
                           alt="Generic placeholder image"
@@ -291,7 +241,7 @@
                   <div class="media media-reply">
                     <img
                       class="mr-3 circle-rounded"
-                      th:src="@{front/images/avatar/2.jpg}"
+                      th:src="@{/front/images/avatar/2.jpg}"
                       width="50"
                       height="50"
                       alt="Generic placeholder image"
@@ -332,7 +282,7 @@
                   <div class="media media-reply">
                     <img
                       class="mr-3 circle-rounded"
-                      th:src="@{front/images/avatar/2.jpg}"
+                      th:src="@{/front/images/avatar/2.jpg}"
                       width="50"
                       height="50"
                       alt="Generic placeholder image"

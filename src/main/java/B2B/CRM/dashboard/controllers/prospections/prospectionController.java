@@ -1,5 +1,6 @@
 package B2B.CRM.dashboard.controllers.prospections;
 
+import B2B.CRM.dashboard.entities.accounts.User;
 import B2B.CRM.dashboard.entities.prospections.Prospection;
 import B2B.CRM.dashboard.entities.prospections.ProspectionStatus;
 import B2B.CRM.dashboard.entities.statistics.Product;
@@ -8,12 +9,15 @@ import B2B.CRM.dashboard.repositories.prospections.ProspectionRepository;
 import B2B.CRM.dashboard.repositories.prospections.ProspectionStatusRepository;
 import B2B.CRM.dashboard.repositories.statisitics.ProductRepository;
 import B2B.CRM.dashboard.repositories.statisitics.YearStatisticRepository;
+import B2B.CRM.dashboard.services.acoounts.UserService;
 import B2B.CRM.dashboard.services.prospections.AverageDealValueService;
 import B2B.CRM.dashboard.services.prospections.ConverionRateService;
 import java.util.Arrays;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +33,9 @@ public class prospectionController {
   private final ProspectionStatusRepository prospectionStatusRepository;
   private final ConverionRateService conversionRateService;
   private final AverageDealValueService averageDealValueService;
+
+  @Autowired
+  private UserService userService;
 
   @Autowired
   prospectionController(
@@ -51,6 +58,13 @@ public class prospectionController {
   public String listProviders(Model model) {
     List<Prospection> la = prospectionRepository.findAll();
     if (la.size() == 0) la = null;
+    Authentication auth = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    User user = userService.findUserByEmail(auth.getName());
+    System.out.println(user.getRoles());
+    String userRole = user.getRoles().iterator().next().getRole();
+    model.addAttribute("userRole", userRole);
     model.addAttribute("prospectionList", la);
     return "prospections/prospection/list";
   }
@@ -64,6 +78,14 @@ public class prospectionController {
 
     List<ProspectionStatus> lps = prospectionStatusRepository.findAll();
     if (lps.isEmpty()) lps = null;
+
+    Authentication auth = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    User user = userService.findUserByEmail(auth.getName());
+    System.out.println(user.getRoles());
+    String userRole = user.getRoles().iterator().next().getRole();
+    model.addAttribute("userRole", userRole);
 
     model.addAttribute("listProducts", lp);
     model.addAttribute("listYears", ly);
@@ -95,12 +117,11 @@ public class prospectionController {
       .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + p)
       );
 
-    prospection.setProduct(product);
-
     YearStatistic year = yearStatisticRepository
       .findById(y)
       .orElseThrow(() -> new IllegalArgumentException("Invalid year Id:" + y));
 
+    prospection.setProduct(product);
     prospection.setYearStatistic(year);
 
     ProspectionStatus prospectionStatusQ1 = prospectionStatusRepository

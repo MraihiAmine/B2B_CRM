@@ -25,7 +25,6 @@ import lombok.ToString;
 // @ToString
 @Table(name = "customer_retention_rate")
 public class CustomerRetentionRateEntity {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
