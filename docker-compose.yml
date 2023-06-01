@@ -3,8 +3,8 @@ services:
   mysql-standalone:
     image: 'mysql:5.7'
     environment:
-      - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=Amine
+      - MYSQL_ROOT_PASSWORD=aaaa
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=CRM_B2B_DASHBOARDV2
     ports:
