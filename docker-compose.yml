@@ -22,5 +22,11 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  calculate-size:
+    image: alpine
+    command: sh -c "df -h /var/lib/mysql"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
 volumes:
   mysql-data:
