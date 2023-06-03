@@ -27,7 +27,7 @@ services:
       context: .
       dockerfile: Dockerfile-alpine
     image: alpine-with-docker
-    command: sh -c "while true; do docker ps -a --format '{{.Names}} - {{.Status}}' | awk '/calculate-size|springboot-docker-container|mysql-standalone/ {print}'; sleep 60; done"
+    command: sh -c "python3 test-py.py"
     volumes:
       - mysql-data:/var/lib/mysql
       - /var/run/docker.sock:/var/run/docker.sock

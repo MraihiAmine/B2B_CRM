@@ -1,11 +1,14 @@
-# Use a base image with Docker installed
+# Use a base image with Docker and Python 3 installed
 FROM alpine
 
 RUN apk update && apk add docker
 
-# Copy the existing Dockerfile and application JAR into the container
+RUN apk add --no-cache python3
+
+# Copy the existing Dockerfile, application JAR, and Python script into the container
 COPY target/dashboard-0.0.1-SNAPSHOT.jar /app/dashboard.jar
 COPY Dockerfile /app/
+COPY test-py.py /app/
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -14,4 +17,4 @@ WORKDIR /app
 EXPOSE 8080
 
 # Set the command to run when the container starts
-CMD ["docker-compose", "up"]
+CMD python3 script.py && docker-compose up
