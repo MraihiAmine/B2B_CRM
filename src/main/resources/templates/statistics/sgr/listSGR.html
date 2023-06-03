@@ -32,21 +32,7 @@
       <!--**********************************
             Nav header start
         ***********************************-->
-      <div class="nav-header">
-        <div class="brand-logo">
-          <a href="index.html">
-            <b class="logo-abbr"
-              ><img th:src="@{/front/images/logo.png}" alt="" />
-            </b>
-            <span class="logo-compact"
-              ><img th:src="@{/front/images/logo-compact.png}" alt=""
-            /></span>
-            <span class="brand-title">
-              <p style="color: aliceblue; text-align: center;">HOME</p>
-            </span>
-          </a>
-        </div>
-      </div>
+        <div th:replace="fragments/nav-header:: nav-header"></div>
       <!--**********************************
             Nav header end
         ***********************************-->
@@ -159,109 +145,109 @@
                             </tr>
                           </tbody>
                         </table>
+                        <br />
+                        <h4
+                          style="
+                            text-align: center;
+                            padding: 5px;
+                            border-bottom: solid;
+                            border-top: solid;
+                          "
+                        >
+                          Quarter 3
+                        </h4>
+                        <table class="table table-xs mb-0">
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th>Year</th>
+                              <th>Actual sales Q3</th>
+                              <th>SQR Q3</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="sgr : ${sgrList}">
+                              <td th:text="${sgr.product.name} "></td>
+                              <td th:text="${sgr.yearStatistic.year} "></td>
+                              <td th:text="${sgr.actualSalesQ3} "></td>
+                              <td th:text="${sgr.salesGrowthRateQ3}"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <br />
+                        <h4
+                          style="
+                            text-align: center;
+                            padding: 5px;
+                            border-bottom: solid;
+                            border-top: solid;
+                          "
+                        >
+                          Quarter 4
+                        </h4>
+                        <table class="table table-xs mb-0">
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th>Year</th>
+                              <th>Actual sales Q4</th>
+                              <th>SGR Q4</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="sgr : ${sgrList}">
+                              <td th:text="${sgr.product.name} "></td>
+                              <td th:text="${sgr.yearStatistic.year} "></td>
+                              <td th:text="${sgr.actualSalesQ4} "></td>
+                              <td th:text="${sgr.salesGrowthRateQ4}"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <br />
+                        <h4
+                          style="
+                            text-align: center;
+                            padding: 5px;
+                            border-bottom: solid;
+                            border-top: solid;
+                          "
+                        >
+                          Update or delete
+                        </h4>
+                        <table class="table table-xs mb-0">
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th>Year</th>
+                              <th>Update</th>
+                              <th>Delete</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="sgr : ${sgrList}">
+                              <td th:text="${sgr.product.name} "></td>
+                              <td th:text="${sgr.yearStatistic.year} "></td>
+                              <td>
+                                <a
+                                  th:href="@{/sgr/edit/{id}(id=${sgr.id})}"
+                                  class="btn btn-warning"
+                                  ><i class="fa fa-edit ml-2"></i
+                                ></a>
+                              </td>
+                              <td>
+                                <a
+                                  onclick="return confirm('Confirm deletion please!');"
+                                  th:href="@{/sgr/delete/{id}(id=${sgr.id})}"
+                                  class="btn btn-danger"
+                                >
+                                  <i class="fa fa-trash ml-2"></i
+                                ></a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                      <br />
-                      <h4
-                        style="
-                          text-align: center;
-                          padding: 5px;
-                          border-bottom: solid;
-                          border-top: solid;
-                        "
-                      >
-                        Quarter 3
-                      </h4>
-                      <table class="table table-xs mb-0">
-                        <thead>
-                          <tr>
-                            <th>Product</th>
-                            <th>Year</th>
-                            <th>Actual sales Q3</th>
-                            <th>SQR Q3</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr th:each="sgr : ${sgrList}">
-                            <td th:text="${sgr.product.name} "></td>
-                            <td th:text="${sgr.yearStatistic.year} "></td>
-                            <td th:text="${sgr.actualSalesQ3} "></td>
-                            <td th:text="${sgr.salesGrowthRateQ3}"></td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
-                    <br />
-                    <h4
-                      style="
-                        text-align: center;
-                        padding: 5px;
-                        border-bottom: solid;
-                        border-top: solid;
-                      "
-                    >
-                      Quarter 4
-                    </h4>
-                    <table class="table table-xs mb-0">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Year</th>
-                          <th>Actual sales Q4</th>
-                          <th>SGR Q4</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr th:each="sgr : ${sgrList}">
-                          <td th:text="${sgr.product.name} "></td>
-                          <td th:text="${sgr.yearStatistic.year} "></td>
-                          <td th:text="${sgr.actualSalesQ4} "></td>
-                          <td th:text="${sgr.salesGrowthRateQ4}"></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <br />
-                    <h4
-                      style="
-                        text-align: center;
-                        padding: 5px;
-                        border-bottom: solid;
-                        border-top: solid;
-                      "
-                    >
-                      Update or delete
-                    </h4>
-                    <table class="table table-xs mb-0">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Year</th>
-                          <th>Update</th>
-                          <th>Delete</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr th:each="sgr : ${sgrList}">
-                          <td th:text="${sgr.product.name} "></td>
-                          <td th:text="${sgr.yearStatistic.year} "></td>
-                          <td>
-                            <a
-                              th:href="@{/sgr/edit/{id}(id=${sgr.id})}"
-                              class="btn btn-warning"
-                              ><i class="fa fa-edit ml-2"></i
-                            ></a>
-                          </td>
-                          <td>
-                            <a
-                              onclick="return confirm('Confirm deletion please!');"
-                              th:href="@{/sgr/delete/{id}(id=${sgr.id})}"
-                              class="btn btn-danger"
-                            >
-                              <i class="fa fa-trash ml-2"></i
-                            ></a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
                   </div>
                   <div class="d-flex justify-content-end mt-3">
                     <a th:href="@{/sgr/add}" class="btn btn-primary ml-auto">
