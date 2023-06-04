@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 1m
+
+scrape_configs:
+  - job_name: 'mysql'
+    static_configs:
+      - targets: ['mysql-standalone:3308']
+        labels:
+          instance: 'mysql'
+    metrics_path: '/metrics'

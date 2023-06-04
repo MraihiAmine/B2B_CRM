@@ -35,7 +35,7 @@ public class FirstAdmin {
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
   }
 
-  @RequestMapping("firstAdmin")
+  @RequestMapping("/firstAdmin")
   @ResponseBody
   public String addUser() {
     System.out.println("add user was called");
