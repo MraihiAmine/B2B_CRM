@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
             if(stopped_containers != ''):
                 print('Entered to the mailing function', flush=True)
-                send_email(EMAIL_SUBJECT, stopped_containers)
+                //send_email(EMAIL_SUBJECT, stopped_containers)
                 stopped_containers = ''
 
             last_time = current_time
