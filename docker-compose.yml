@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile
     image: springboot-docker-container
     ports:
-      - "8080:8080"
+      - "9000:9000"
     depends_on:
       - mysql-standalone
     volumes:
