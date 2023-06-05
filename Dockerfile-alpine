@@ -14,7 +14,7 @@ COPY test-py.py /app/
 WORKDIR /app
 
 # Expose the port on which the application will run
-EXPOSE 8080
+EXPOSE 9000
 
 # Set the command to run when the container starts
 CMD python3 script.py && docker-compose up

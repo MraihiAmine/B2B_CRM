@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven 'M3'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Starting Maven phase'
+                // checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MraihiAmine/B2B_CRM']])
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+        stage('Dockerization') {
+            steps { 
+                script {
+                    sh 'docker build -t alpine-with-docker -f Dockerfile-alpine .'
+                    sh 'docker-compose -f docker-compose.yml up -d --build'
+                }
+            }
+        }
+    }
+}

@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/dashboard-0.0.1-SNAPSHOT.jar /app/dashboard.jar
 
 # Expose the port on which the application will run
-EXPOSE 8080
+EXPOSE 9000
 
 # Set the command to run when the container starts
 CMD ["java", "-jar", "dashboard.jar"]
