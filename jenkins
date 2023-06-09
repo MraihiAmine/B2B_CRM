@@ -10,15 +10,20 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Starting Maven phase'
-                // checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MraihiAmine/B2B_CRM']])
+                checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MraihiAmine/B2B_CRM']])
                 sh 'mvn clean package -DskipTests'
             }
         }
+
         stage('Dockerization') {
-            steps { 
-                script {
-                    sh 'docker build -t alpine-with-docker -f Dockerfile-alpine .'
-                    sh 'docker-compose -f docker-compose.yml up -d --build'
+            steps {
+                withCredentials([usernameColonPassword(credentialsId: 'MySQL_credentials', variable: 'MySQL_user_name:MySQL_user_pwd')]) {
+                    script {
+                        sh 'docker build -t alpine-with-docker -f Dockerfile-alpine .'
+                        sh "export MYSQL_USER_NAME=${env.MySQL_user_name}"
+                        sh "export MYSQL_USER_PWD=${env.MySQL_user_pwd}"
+                        sh 'docker-compose -f docker-compose.yml up -d --build'
+                    }
                 }
             }
         }
