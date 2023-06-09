@@ -5,6 +5,7 @@ services:
     environment:
       - MYSQL_DATABASE=CRM_B2B_DASHBOARDV2
       - MYSQL_USER=${MYSQL_USER_NAME}
+      - MYSQL_ROOT_PASSWORD=aaaa
       - MYSQL_PASSWORD=${MYSQL_USER_PWD}
     ports:
       - "3308:3306"
