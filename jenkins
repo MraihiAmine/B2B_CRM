@@ -22,7 +22,7 @@ pipeline {
                         sh 'docker build -t alpine-with-docker -f Dockerfile-alpine .'
                         sh "export MYSQL_USER_NAME=${env.MySQL_user_name}"
                         sh "export MYSQL_USER_PWD=${env.MySQL_user_pwd}"
-                        sh 'docker-compose -f docker-compose.yml up -d --build'
+                        sh 'docker-compose --env-file=secrets.env -f docker-compose.yml up -d --build'
                     }
                 }
             }
