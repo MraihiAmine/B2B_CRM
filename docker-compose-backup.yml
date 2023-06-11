@@ -1,0 +1,50 @@
+version: '3'
+services:
+  mysql-standalone:
+    image: 'mysql:5.7'
+    environment:
+      - MYSQL_DATABASE=CRM_B2B_DASHBOARDV2
+      - MYSQL_USER_FILE=/run/secrets/mysql_db_user_1
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql_db_password_1
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql_root_db_password_1
+    ports:
+      - "3308:3306"
+    secrets:
+      - mysql_db_user_1
+      - mysql_db_password_1
+      - mysql_root_db_password_1
+
+
+
+  springboot-docker-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: springboot-docker-container
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mysql-standalone
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  calculate-size:
+    build:
+      context: .
+      dockerfile: Dockerfile-alpine
+    image: alpine-with-docker
+    command: sh -c "python3 test-py.py"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - /var/run/docker.sock:/var/run/docker.sock
+
+secrets:
+   mysql_db_user_1:
+     file: ./secrets.txt
+   mysql_db_password_1:
+     file: ./secrets.txt
+   mysql_root_db_password_1:
+     file: ./secrets.txt
+
+volumes:
+  mysql-data:
