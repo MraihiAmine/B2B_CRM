@@ -20,9 +20,10 @@ pipeline {
                 withCredentials([usernameColonPassword(credentialsId: 'MySQL_credentials', variable: 'MySQL_user_name:MySQL_user_pwd')]) {
                     script {
                         sh 'docker build -t alpine-with-docker -f Dockerfile-alpine .'
-                        sh "export MYSQL_USER_NAME=${env.MySQL_user_name}"
-                        sh "export MYSQL_USER_PWD=${env.MySQL_user_pwd}"
-                        sh 'docker-compose --env-file=secrets.env -f docker-compose.yml up -d --build'
+                        sh "export MYSQL_USER_NAME=${MySQL_user_name}"
+                        sh "export MYSQL_USER_PWD=${MySQL_user_pwd}"
+                        sh "docker-compose build --build-arg DISCORD_TOKEN='$MySQL_user_name' --build-arg APPLICATION_ID='$MySQL_user_pwd' --detach --verbose"
+                        sh "docker-compose up -d"
                     }
                 }
             }
