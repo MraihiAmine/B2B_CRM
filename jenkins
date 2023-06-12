@@ -17,14 +17,14 @@ pipeline {
 
         stage('Dockerization') {
             steps {
-                withCredentials([usernameColonPassword(credentialsId: 'MySQL_credentials', variable: 'MySQL_user_name:MySQL_user_pwd')]) {
-                    script {
-                        sh 'docker build -t alpine-with-docker -f Dockerfile-alpine .'
-                        sh "export MYSQL_USER_NAME=${MySQL_user_name}"
-                        sh "export MYSQL_USER_PWD=${MySQL_user_pwd}"
-                        sh "docker-compose build --build-arg DISCORD_TOKEN='$MySQL_user_name' --build-arg APPLICATION_ID='$MySQL_user_pwd' --detach --verbose"
-                        sh "docker-compose up -d"
+                script {
+                    // Retrieve the MySQL_USER_PWD secret from Jenkins
+                    def mySqlUserPwd = withCredentials([string(credentialsId: 'MySQL_user_pwd', variable: 'MySQL_USER_PWD')]) {
+                        return env.MySQL_USER_PWD
                     }
+                    // Build and start the Docker containers
+                    sh "docker-compose build --build-arg MYSQL_USER_PWD='$mySqlUserPwd' --detach --verbose"
+                    sh "docker-compose up -d"
                 }
             }
         }
