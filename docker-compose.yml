@@ -6,7 +6,7 @@ services:
       - MYSQL_DATABASE=CRM_B2B_DASHBOARDV2
       - MYSQL_USER=amine
       - MYSQL_ROOT_PASSWORD=aaaa
-      - MYSQL_PASSWORD: ${MYSQL_USER_PWD_1}
+      - MYSQL_PASSWORD=${MYSQL_USER_PWD_1}
     ports:
       - "3308:3306"
 
