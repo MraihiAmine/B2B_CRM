@@ -1,4 +1,5 @@
 //update the jenkins file configuration
+//checking for the automatic push
 pipeline {
   
           agent any
