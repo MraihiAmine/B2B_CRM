@@ -7,7 +7,7 @@ services:
   spring:
     image: aminemm/spring_data_aminemm
     ports:
-      - "8063:8001" 
+      - "8063:9000" 
     container_name: spring_cont_aminemm
     depends_on:
       - database
