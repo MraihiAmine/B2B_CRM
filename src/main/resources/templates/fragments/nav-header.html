@@ -1,7 +1,7 @@
 <div th:fragment="nav-header">
   <div class="nav-header" th:if="${userRole == 'SUPERADMIN' or userRole == 'Sales man'}">
     <div class="brand-logo">
-      <a th:href="@{/sales-statistics/dashboard}">
+      <a th:href="@{/statistics/dashboard}">
         <b class="logo-abbr"
           ><img th:src="@{/front/images/logo.png}" alt="" />
         </b>
