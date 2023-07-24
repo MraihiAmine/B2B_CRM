@@ -38,6 +38,7 @@ public class FirstAdmin {
   @RequestMapping("/firstAdmin")
   @ResponseBody
   public String addUser() {
+    //comment 24 07 2023
     System.out.println("add user was called");
     User user = new User();
     user.setEmail("mraihiamin@gmail.com");
