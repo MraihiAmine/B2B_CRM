@@ -40,10 +40,10 @@ public class FirstAdmin {
   public String addUser() {
     System.out.println("add user was called");
     User user = new User();
-    user.setEmail("nessrineabdaoui2021@gmail.com");
+    user.setEmail("mraihiamin@gmail.com");
     user.setPassword(bCryptPasswordEncoder.encode("123456"));
-    user.setName("Nessrine");
-    user.setLastName("Abdaoui");
+    user.setName("Mraihi");
+    user.setLastName("Amine");
     user.setActive((long)1);
     Role userRole = new Role();
     userRole.setRole("SUPERADMIN");
